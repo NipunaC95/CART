@@ -1,15 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import firestore from '@react-native-firebase/firestore';
+import {View, Text} from 'react-native';  
 
-const usersCollection = firestore().collection('Users');
-const userDocument = firestore()
-  .collection('Users')
-  .doc('ABC');
-
-
-const App = ()  => {
-  console.log(JSON.stringify(userDocument))
+const App = ()  => { 
   
   return (
     

@@ -1,0 +1,22 @@
+
+//purple color palet
+export const PRIMARY = "#0B132B";
+export const SECONDARY = "#5BC0BE";
+export const TERNARY = "rgb(151, 84, 202)"; 
+
+
+export const WARNINGNERROR = "rgb(231, 76, 60)";
+export const DANGER = "rgb(255,0,0)";
+export const GREY = "rgb(219, 221, 222)";
+export const WHITE = "rgb(255, 255, 255)";
+export const BLACK = "rgb(0, 0, 0)";
+export const SEMI_TRANSPARENT = "rgba(0,0,0,0.5)";
+export const RED = "rgba(255, 0, 0, 1)";
+export const SILVER = "rgb(192,192,192)";
+export const DARK_GRAY = "rgb(46, 46, 46)";
+export const DARK_LIME_GREEN = "rgba(0,128,0,0.2)";
+export const TRANSPARENT = "transparent";
+export const GRADIENT_PRIMARY = ["rgb(0, 169, 244)", "rgb(0, 169, 244)"];
+export const LIGHT_GREEN = "#99BA93";
+export const GREEN = "rgb(0,120,0)";
+export const BORDER_LIGHT_GREYCOLOR = "#EFE9EB";

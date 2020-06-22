@@ -1,11 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {color} from 'react-native-reanimated';
+import {View, Text, StyleSheet, Image} from 'react-native'; 
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const ShopCard = ({name, location, admin, photo, onPress}) => {
+const ShopCard = ({name, location, admin, photo, onPress , onLongPress}) => {
   return (
-    <TouchableWithoutFeedback onPress={onPress} style={styles.card}>
+    <TouchableWithoutFeedback onPress={onPress} onLongPress={onLongPress} style={styles.card}>
   
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.subTitle}>located at {location}</Text>
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: '10%',
     height: 140,
     borderRadius: 10,
-    backgroundColor: '#1C7B40',
+    backgroundColor: '#28AC5B',
     elevation: 5,
   },
 

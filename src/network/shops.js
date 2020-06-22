@@ -13,10 +13,9 @@ const addShop = (Shop, addComplete) => {
     .catch((error) => console.log(error));
 };
 
-const getShops = async () => {
+const getShops = async ( ) => {
   var ShopList = [];
-  var snapshot = await firestore().collection('Shops');
-  get();
+  var snapshot = await firestore().collection('Shops').get();
 
   snapshot.forEach((doc) => {
     ShopList.push(doc.data());

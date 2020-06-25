@@ -14,8 +14,8 @@ const secondryTabNavigator = () => {
           style: styles.header,
           indicatorStyle: styles.indicator,
         }}>
-        <Tab.Screen name="Shops" component={ShopsScreen} />
-        <Tab.Screen name="Groups" component={GroupsScreen} /> 
+        <Tab.Screen name="shops" component={ShopsScreen} />
+        <Tab.Screen name="groups" component={GroupsScreen} /> 
       </Tab.Navigator> 
   );
 };

@@ -1,14 +1,23 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  ScrollView,
+} from 'react-native';
 import {signUp} from '../../network/users';
+import {useNavigation} from '@react-navigation/native';
 
 const index = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const navigation = useNavigation();
 
-  const submitForm = ({navigator}) => {
+  const submitForm = () => {
     console.log(userName, email, password, repeatPassword);
 
     if (userName == '') {
@@ -21,12 +30,13 @@ const index = () => {
       alert('Re enter password correctly');
     } else {
       //create account
-      signUp(email, password, userName ,navigator);
+      signUp(email, password, userName , navigation);
+     
     }
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>SignUp</Text>
       <Text style={styles.subtitle}>Username</Text>
       <TextInput
@@ -68,7 +78,7 @@ const index = () => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

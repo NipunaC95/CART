@@ -1,16 +1,12 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'; 
+import {ShopsScreen , GroupsScreen } from './../screens/index'   
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'; 
 
-import ShopsScreen from "./../screens/shops/index";
-import GroupsScreen from "./../screens/groups/index";
-
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationContainer} from '@react-navigation/native';
 const Tab = createMaterialTopTabNavigator();
 
 const secondryTabNavigator = () => {
-  return (
-    <NavigationContainer>
+  return ( 
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: styles.labels,
@@ -20,8 +16,7 @@ const secondryTabNavigator = () => {
         }}>
         <Tab.Screen name="Shops" component={ShopsScreen} />
         <Tab.Screen name="Groups" component={GroupsScreen} /> 
-      </Tab.Navigator>
-    </NavigationContainer>
+      </Tab.Navigator> 
   );
 };
 
@@ -47,4 +42,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#0F4021',
       },
 })
+
 export default secondryTabNavigator;

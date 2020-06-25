@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text, FlatList, SafeAreaView, View, StyleSheet} from 'react-native';
 import {getShops} from './../../network/shops';
-
+import {withNavigation} from 'react-navigation';
 import ShopCard from './../../components/shopCard';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {  TouchableOpacity } from 'react-native-gesture-handler';
 class shopsScreen extends Component {
   constructor(props) {
     super(props);
@@ -16,14 +16,17 @@ class shopsScreen extends Component {
     const shopList = await getShops();
     this.setState({shopList});
   }
+
+  navigateToAddShop(){
+      //alert("Hello !")
+      this.props.navigation.navigate('addShop')
+  }
+
   render() {
     return (
-      <SafeAreaView>
-        <View style={styles.container}>
-          <View style={styles.plus}>
-            <Text style={styles.plusText}>+</Text>
-          </View>
-          <FlatList 
+      <View>
+        <View style={styles.container}> 
+          <FlatList
             showsHorizontalScrollIndicator={false}
             data={this.state.shopList}
             keyExtractor={(item, index) => index.toString()}
@@ -38,13 +41,32 @@ class shopsScreen extends Component {
               );
             }}
           />
+          <View style={styles.plus}>
+            <TouchableOpacity style={styles.plusWrapper} onPress={()=>{this.navigateToAddShop()}}> 
+            <Text style={styles.plusText}>+</Text>
+            </TouchableOpacity >
+          </View>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  plusHolder: {
+    position: 'absolute',
+    left: 10,
+    top: 10,
+  },
+
+  plusWrapper:{  
+    width: 35,
+    height: 35,
+    alignContent:"center", 
+    alignItems:"center",
+    justifyContent: 'center', 
+  },
+
   container: {
     height: '100%',
     paddingHorizontal: '5%',
@@ -64,7 +86,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    elevation:3
+    elevation: 3,
   },
 
   plusText: {
@@ -73,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default shopsScreen;
+export default withNavigation(shopsScreen);

@@ -34,7 +34,8 @@
     "react-native-simple-animations": "^0.2.2",
     "react-native-svg": "^12.1.0",
     "react-native-tab-view": "^2.14.4",
-    "react-native-vector-icons": "^6.6.0"
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^4.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",

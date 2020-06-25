@@ -1,15 +1,15 @@
 import firestore from '@react-native-firebase/firestore';
 
-const addShop = (Shop, addComplete) => {
+const addShop = (Shop ) => {
   firestore()
     .collection('Shops')
     .add({
       name: Shop.name,
-      color: Shop.color,
+      location: Shop.location,
       date: new Date(),
     })
     .then((snapshot) => snapshot.get())
-    .then((ShopData) => addComplete(ShopData.data())) //This brings submitted fod item top the state of the second screen
+    //.then((ShopData) => addComplete(ShopData.data())) //This brings submitted fod item top the state of the second screen
     .catch((error) => console.log(error));
 };
 

@@ -4,7 +4,10 @@ import { View, Text } from 'react-native'
 export default function index() {
     return (
         <View>
-            <Text></Text>
+            <Text>
+
+                Sign Up
+            </Text>
         </View>
     )
 }

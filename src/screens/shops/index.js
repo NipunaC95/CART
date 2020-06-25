@@ -27,7 +27,7 @@ class shopsScreen extends Component {
       <View>
         <View style={styles.container}> 
           <FlatList
-            showsHorizontalScrollIndicator={false}
+  showsVerticalScrollIndicator ={false} 
             data={this.state.shopList}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => {

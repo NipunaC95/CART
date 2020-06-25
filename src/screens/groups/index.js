@@ -23,8 +23,8 @@ class GroupScreen extends Component {
           <View style={styles.plus}>
             <Text style={styles.plusText}>+</Text>
           </View>
-          <FlatList 
-            showsHorizontalScrollIndicator={false}
+          <FlatList
+            showsVerticalScrollIndicator={false}
             data={this.state.shopList}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    elevation:3
+    elevation: 3,
   },
 
   plusText: {

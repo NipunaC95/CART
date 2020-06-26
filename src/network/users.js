@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-const signUp = (email, password, userName ,navigation) => { 
+const signUp = (email, password, userName, navigation) => {
   auth()
     .createUserWithEmailAndPassword(email, password)
     .then((data) => {
@@ -9,16 +9,18 @@ const signUp = (email, password, userName ,navigation) => {
 
       firestore()
         .collection('Users')
-        .add({
+        .doc(data.user.uid)
+        .set({
           name: userName,
           email,
           newUser: data.additionalUserInfo.isNewUser,
-          emailVerified: data.emailVerified,
+          emailVerified: data.user.emailVerified,
           uid: data.user.uid,
           image: data.user.photoURl,
           date: new Date(),
         })
-        .then((snapshot) => {  navigation.navigate('secondryNavigator');
+        .then((snapshot) => {
+          navigation.navigate('secondryNavigator');
         })
         //  navigator.navigate('secondryNavigator');})
         //.then((ShopData) => addComplete(ShopData.data())) //This brings submitted fod item top the state of the second screen
@@ -39,12 +41,8 @@ const signUp = (email, password, userName ,navigation) => {
 
 const saveUser = (user) => {};
 
-const logIn = async (email, password) => {
-  try {
-    return await firebase.auth().signInWithEmailAndPassword(email, password);
-  } catch (error) {
-    return error;
-  }
+const logIn = async (email, password) => { 
+  return await auth().signInWithEmailAndPassword(email, password)
 };
 
 const logOut = () => {

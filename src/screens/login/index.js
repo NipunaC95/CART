@@ -1,4 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, Component} from 'react';
+import {connect} from 'react-redux';
+import {
+  loginRequest,
+  loginSuccess,
+  loginFailed,
+} from './../../redux/actionCreators/authActions';
 import {
   View,
   Text,
@@ -10,14 +16,48 @@ import {
 import {logIn} from '../../network/users';
 import {useNavigation} from '@react-navigation/native';
 
-const index = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginSuccess: (data) => {  dispatch(loginSuccess(data)); },
+    loginFailed: ( ) => {  dispatch(loginFailed( )); },
+  };
+};
 
-  const submitForm = () => {
+const mapStateToProps = (state) => {
+ // console.log(JSON.stringify(state,null,2))
+  return { 
+    user:  state.auth.user,
+  };
+};
+
+class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      uid:''
+    };
+  }
+
+  setPassword(text) {
+    this.setState({
+      ...this.state,
+      password: text,
+    });
+  }
+
+  setEmail(text) {
+    this.setState({
+      ...this.state,
+      email: text,
+    });
+  }
+
+  submitForm() {
     //console.log(email, password);
-
+    const email = this.state.email;
+    const password = this.state.password;
     if (email == '') {
       alert('Enter email');
     } else if (password == '') {
@@ -26,9 +66,14 @@ const index = () => {
       //create account
       logIn(email, password)
         .then((data) => {
-          console.log(JSON.stringify(data, null, 2));
+          //console.log(JSON.stringify(data, null, 2));
+          //navigation.navigate('profile');
+          this.props.loginSuccess(data);
+
+         // console.log(JSON.stringify(this.state));
         })
         .catch((error) => {
+          this.props.loginFailed()
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
           }
@@ -44,42 +89,62 @@ const index = () => {
       // }).catch((e)=>{
       //   console.log(e)
       // });
+      //console.log(JSON.stringify(data, null, 2));
     }
-  };
+  }
 
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+testButton(){
+  
+ //console.log(JSON.stringify(this.props,null,3));
+ //console.log(JSON.stringify(this.props.user.user.uid,null,3));
+}
 
-      <Text style={styles.subtitle}>email</Text>
-      <TextInput
-        onChangeText={(e) => {
-          setEmail(e);
-        }}
-        style={styles.input}
-      />
 
-      <Text style={styles.subtitle}>Password</Text>
-      <TextInput
-        onChangeText={(e) => {
-          setPassword(e);
-        }}
-        style={styles.input}
-      />
 
-      <View style={styles.buttonContainer}>
-        <Button
-          title={'Submit'}
-          onPress={() => {
-            submitForm();
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>Login</Text>
+
+        <Text style={styles.subtitle}>email</Text>
+        <TextInput
+          onChangeText={(e) => {
+            this.setEmail(e);
           }}
+          style={styles.input}
         />
-      </View>
-    </ScrollView>
-  );
-};
 
-export default index;
+        <Text style={styles.subtitle}>Password</Text>
+        <TextInput
+          onChangeText={(e) => {
+            this.setPassword(e);
+          }}
+          style={styles.input}
+        />
+
+        <View style={styles.buttonContainer}>
+          <Button
+            title={'Submit'}
+            onPress={() => {
+              this.submitForm();
+            }}
+          />
+<Text>.</Text>
+<Button
+            title={'Test'}
+            onPress={() => {
+              this.testButton();
+            }}
+          />
+        </View>
+
+        <Text> {this.props.user.user.uid}</Text>
+      </ScrollView>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(index);
 
 const styles = StyleSheet.create({
   container: {

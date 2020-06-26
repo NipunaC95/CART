@@ -4,33 +4,16 @@ import {TextInput, FlatList} from 'react-native-gesture-handler';
 import {getFoods, addFood} from './network/FoodsAPI';  
 import TabNavigator from "./navigators/secondryTabNavigator";
 import StackNavigator from "./navigators/mainStackNavigator";
+import { Provider } from "react-redux";
+import store from './redux/store';
 class App extends Component {
-  colors = ['red', 'green', 'yellow', 'blue', 'maroon', 'black'];
-
-  state = {
-    foodList: [],
-    currentFoodItem: null,
-  };
-
-  onFoodAdded = (food) => {
-    this.setState({
-      foodList: [...this.state.foodList, food],
-    });
-  };
-
-  onFoodsRecieved = (foodList) => {
-    this.setState((prevState) => ({
-      foodList: (prevState.foodList = foodList),
-    }));
-  };
-
-  componentDidMount() {
-    getFoods(this.onFoodsRecieved);
-  }
+ 
 
   render() {
     return (  
+      <Provider store={store}>
       <StackNavigator />
+      </Provider>
     );
   }
 }

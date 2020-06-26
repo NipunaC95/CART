@@ -6,7 +6,7 @@ import { AddShop } from "./../screens"
 import  Login from './../screens/login'
 import SignUp from './../screens/signUp'
 import { DARKGREEN , LIGHTGREEN } from "./../styles/colors";
-
+import ProfileScreen from "./../screens/profile";
 const Stack = createStackNavigator();
 
 const mainStackNavigator = () => {
@@ -38,8 +38,14 @@ const mainStackNavigator = () => {
           name="login"
           component={Login}
           options={{headerShown: false}}
+        /> 
+      
+        <Stack.Screen
+          name="profile"
+          component={ProfileScreen}
+          options={{headerShown: false}}
         />
-
+ 
         <Stack.Screen
           name="addShop"
           component={AddShop}

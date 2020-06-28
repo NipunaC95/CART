@@ -13,20 +13,26 @@ import {
   Button,
   ScrollView,
 } from 'react-native';
-import {logIn} from '../../network/users';
+import {logIn, getUserDetails} from '../../network/users';
 import {useNavigation} from '@react-navigation/native';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginSuccess: (data) => {  dispatch(loginSuccess(data)); },
-    loginFailed: ( ) => {  dispatch(loginFailed( )); },
+    loginSuccess: (data) => {
+      dispatch(loginSuccess(data));
+    },
+    loginFailed: () => {
+      dispatch(loginFailed());
+    },
+    loginRequest: () => {
+      dispatch(loginRequest());
+    },
   };
 };
 
 const mapStateToProps = (state) => {
- // console.log(JSON.stringify(state,null,2))
-  return { 
-    user:  state.auth.user,
+  return {
+    user: state.auth.user,
   };
 };
 
@@ -34,9 +40,12 @@ class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      uid:''
+      email: 's@s.com',
+      password: 'Nipuna',
+      uid: '',
+      user: {
+        name: '',
+      },
     };
   }
 
@@ -54,8 +63,17 @@ class index extends Component {
     });
   }
 
+  setUser(text) {
+    if (text != undefined) {
+      this.setState({
+        ...this.state,
+        user: text,
+      });
+    }
+  }
+
   submitForm() {
-    //console.log(email, password);
+    this.props.loginRequest();
     const email = this.state.email;
     const password = this.state.password;
     if (email == '') {
@@ -63,17 +81,20 @@ class index extends Component {
     } else if (password == '') {
       alert('Enter password');
     } else {
-      //create account
       logIn(email, password)
         .then((data) => {
-          //console.log(JSON.stringify(data, null, 2));
-          //navigation.navigate('profile');
-          this.props.loginSuccess(data);
-
-         // console.log(JSON.stringify(this.state));
+          this.setState({...this.state, uid: data.user.uid}); 
+          this.props.loginSuccess(data); 
+        })
+        .then(async () => {
+          const data = await getUserDetails(this.state.uid);
+          this.props.loginSuccess(data); 
+          console.log(JSON.stringify(data.name));
+        }).then(()=>{
+          this.props.navigation.navigate('profile');
         })
         .catch((error) => {
-          this.props.loginFailed()
+          this.props.loginFailed();
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
           }
@@ -93,15 +114,8 @@ class index extends Component {
     }
   }
 
-testButton(){
-  
- //console.log(JSON.stringify(this.props,null,3));
- //console.log(JSON.stringify(this.props.user.user.uid,null,3));
-}
-
-
-
   render() {
+    console.log(JSON.stringify(this.props));
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Login</Text>
@@ -111,6 +125,7 @@ testButton(){
           onChangeText={(e) => {
             this.setEmail(e);
           }}
+          value={this.state.email}
           style={styles.input}
         />
 
@@ -119,6 +134,7 @@ testButton(){
           onChangeText={(e) => {
             this.setPassword(e);
           }}
+          value={this.state.password}
           style={styles.input}
         />
 
@@ -129,16 +145,11 @@ testButton(){
               this.submitForm();
             }}
           />
-<Text>.</Text>
-<Button
-            title={'Test'}
-            onPress={() => {
-              this.testButton();
-            }}
-          />
-        </View>
 
-        <Text> {this.props.user.user.uid}</Text>
+          <Text>{this.state.user.name}</Text>
+        </View>
+ 
+        {/* <Text> {this.state.uid}</Text> */}
       </ScrollView>
     );
   }

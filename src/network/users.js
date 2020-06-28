@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth'; 
 
 const signUp = (email, password, userName, navigation) => {
   auth()
@@ -37,10 +37,7 @@ const signUp = (email, password, userName, navigation) => {
 
       console.error(error);
     });
-};
-
-const saveUser = (user) => {};
-
+}; 
 const logIn = async (email, password) => { 
   return await auth().signInWithEmailAndPassword(email, password)
 };
@@ -51,4 +48,10 @@ const logOut = () => {
     .then(() => console.log('User signed out!'));
 };
 
-export {signUp, logOut, logIn};
+const getUserDetails = async (userId)=>{  
+  const doc= await firestore().collection('Users').doc(userId).get(); 
+  return doc.data();  
+}  
+
+ 
+export {signUp, logOut, logIn , getUserDetails };

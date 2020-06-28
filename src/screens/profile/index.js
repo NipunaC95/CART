@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View , StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {TextInput} from 'react-native-gesture-handler';
 
+ 
+
 const mapStateToProps = (state) => {
   return {
-    //name: state.user.name,
-    uid: state.user.uid,
+    user: state.auth.user,
   };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
 };
 
 export class ProfileScreen extends Component {
@@ -21,16 +18,33 @@ export class ProfileScreen extends Component {
   }
 
   render() {
-    return (
-      <View>
-        <TextInput />
 
-        <Text> textInComponent </Text>
-        <Text>UID : {this.props.uid}</Text>
+    console.log(JSON.stringify(this.props , null , 2))
+    return (
+      <View style={styles.container}> 
+
+        <Text>Profile </Text>
+        <Text>Name: {this.props.user.name}</Text>
+        <Text>Email : {this.props.user.email}</Text>
+        <Text>UID : {this.props.user.uid}</Text>
+        <Text>varified email ? : {this.props.user.emailVerified?' Yes':' No'}</Text>
       </View>
     );
   }
+
+
+
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
+const styles = StyleSheet.create({
+  container:{ 
+      height: '100%',
+      paddingHorizontal: '5%',
+      zIndex: 0,
+      elevation: 1, 
+  
+  }
+})
+
+export default connect(mapStateToProps, null)(ProfileScreen);
  

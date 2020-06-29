@@ -1,50 +1,70 @@
 import React, {Component} from 'react';
-import {Text, View , StyleSheet} from 'react-native';
-import {connect} from 'react-redux';
-import {TextInput} from 'react-native-gesture-handler';
-
- 
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.user,
-  };
-};
+import {Text, View, StyleSheet, Image} from 'react-native';
+import {getData} from '../../store';
+import {Button} from 'native-base';
 
 export class ProfileScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: {},
+    };
+
   }
 
+  async componentDidMount(){
+
+    const user = await getData();
+    this.setState({user});
+    
+  }
+
+
+
+   showState(){
+    //const user =wa getData();  
+    console.log(JSON.stringify(this.state, null, 2));
+
+  }
+ 
+ 
+
+
+
   render() {
+ 
 
-    console.log(JSON.stringify(this.props , null , 2))
+ 
+  
     return (
-      <View style={styles.container}> 
-
+      <View style={styles.container}>
         <Text>Profile </Text>
-        <Text>Name: {this.props.user.name}</Text>
-        <Text>Email : {this.props.user.email}</Text>
-        <Text>UID : {this.props.user.uid}</Text>
-        <Text>varified email ? : {this.props.user.emailVerified?' Yes':' No'}</Text>
+
+        <Text>Name: {this.state.user.name}</Text>
+        <Text>Email : {this.state.user.email}</Text>
+        <Text>UID : {this.state.user.uid}</Text>
+        <Text>
+          varified email ? : {this.state.user.emailVerified ? ' Yes' : ' No'}
+        </Text>
+        <Image source={{uri: this.state.user.image}} />
+
+        <Button
+          onPress={() => {
+           this.showState()
+          }}
+        />
       </View>
     );
   }
-
-
-
 }
 
 const styles = StyleSheet.create({
-  container:{ 
-      height: '100%',
-      paddingHorizontal: '5%',
-      zIndex: 0,
-      elevation: 1, 
-  
-  }
-})
+  container: {
+    height: '100%',
+    paddingHorizontal: '5%',
+    zIndex: 0,
+    elevation: 1,
+  },
+});
 
-export default connect(mapStateToProps, null)(ProfileScreen);
- 
+export default ProfileScreen;

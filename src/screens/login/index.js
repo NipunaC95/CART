@@ -1,10 +1,5 @@
-import React, {useState, Component} from 'react';
-import {connect} from 'react-redux';
-import {
-  loginRequest,
-  loginSuccess,
-  loginFailed,
-} from './../../redux/actionCreators/authActions';
+import React, {Component} from 'react';
+
 import {
   View,
   Text,
@@ -13,28 +8,10 @@ import {
   Button,
   ScrollView,
 } from 'react-native';
-import {logIn, getUserDetails} from '../../network/users';
+import {logIn, getUser} from '../../network/users';
 import {useNavigation} from '@react-navigation/native';
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loginSuccess: (data) => {
-      dispatch(loginSuccess(data));
-    },
-    loginFailed: () => {
-      dispatch(loginFailed());
-    },
-    loginRequest: () => {
-      dispatch(loginRequest());
-    },
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.user,
-  };
-};
+import {getData, setData, clearAppData} from './../../store';
+import {getUserDetails} from './../../network/users';
 
 class index extends Component {
   constructor(props) {
@@ -43,9 +20,6 @@ class index extends Component {
       email: 's@s.com',
       password: 'Nipuna',
       uid: '',
-      user: {
-        name: '',
-      },
     };
   }
 
@@ -63,17 +37,7 @@ class index extends Component {
     });
   }
 
-  setUser(text) {
-    if (text != undefined) {
-      this.setState({
-        ...this.state,
-        user: text,
-      });
-    }
-  }
-
   submitForm() {
-    this.props.loginRequest();
     const email = this.state.email;
     const password = this.state.password;
     if (email == '') {
@@ -82,40 +46,36 @@ class index extends Component {
       alert('Enter password');
     } else {
       logIn(email, password)
-        .then((data) => {
-          this.setState({...this.state, uid: data.user.uid}); 
-          this.props.loginSuccess(data); 
-        })
-        .then(async () => {
-          const data = await getUserDetails(this.state.uid);
-          this.props.loginSuccess(data); 
-          console.log(JSON.stringify(data.name));
+        .then(async (data) => {
+          const state = this.state;
+          const User = await getUserDetails(data.user.uid);
+          this.setState({...state, uid: data.user.uid, user: User});
+          setData(User);
         }).then(()=>{
-          this.props.navigation.navigate('profile');
+          const { navigation } = this.props;
+          navigation.navigate('profile')
+          
         })
         .catch((error) => {
-          this.props.loginFailed();
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
-
-          if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
-          }
-
+          alert('Error occured ', error);
           console.error(error);
         });
-      // .then((data) => {
-      //   console.log(JSON.stringify(data, null, 2));
-      // }).catch((e)=>{
-      //   console.log(e)
-      // });
-      //console.log(JSON.stringify(data, null, 2));
     }
   }
 
+  testState() {
+    console.log(JSON.stringify(this.state, null, 2));
+  }
+
+  testStorage() {
+    console.log(JSON.stringify(getData()));
+  }
+
+  clearStorage() {
+    clearAppData();
+  }
+
   render() {
-    console.log(JSON.stringify(this.props));
     return (
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Login</Text>
@@ -142,20 +102,40 @@ class index extends Component {
           <Button
             title={'Submit'}
             onPress={() => {
-              this.submitForm();
+              this.submitForm(); 
+            }}
+          />
+          <Text>.</Text>
+          <Button
+            title={'Clear storage'}
+            onPress={() => {
+              this.clearStorage()
+            }}
+          />
+          <Text>.</Text>
+
+          <Button
+            title={'test storage'}
+            onPress={() => {
+              this.testStorage()
             }}
           />
 
-          <Text>{this.state.user.name}</Text>
+          <Text>.</Text>
+          <Button
+            title={'Test state'}
+            onPress={() => {
+              this.testState();
+            }}
+          />
+          <Text>.</Text>
         </View>
- 
-        {/* <Text> {this.state.uid}</Text> */}
       </ScrollView>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(index);
+export default index;
 
 const styles = StyleSheet.create({
   container: {

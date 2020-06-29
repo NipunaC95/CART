@@ -17,6 +17,7 @@ const mainStackNavigator = () => {
         // initialRouteName="secondryNavigator" 
         //initialRouteName="addshop" 
         //initialRouteName="signup"
+        //initialRouteName="login"
         initialRouteName="login"
         screenOptions={{
           headerShown: true,

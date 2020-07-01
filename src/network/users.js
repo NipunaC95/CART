@@ -13,12 +13,9 @@ const signUp = (email, password, userName, navigation) => {
         .doc(data.user.uid)
         .set({
           name: userName,
-          email,
-          newUser: data.additionalUserInfo.isNewUser,
-          emailVerified: data.user.emailVerified,
+          email,  
           uid: data.user.uid,
-          image: data.user.photoURl,
-          date: new Date(),
+          image: '', 
         })
         .then((snapshot) => {
           navigation.navigate('secondryNavigator');
@@ -37,6 +34,7 @@ const signUp = (email, password, userName, navigation) => {
       console.error(error);
     });
 }; 
+
 const logIn = async (email, password) => { 
   return await auth().signInWithEmailAndPassword(email, password)
 };

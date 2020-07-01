@@ -13,13 +13,15 @@ const mainStackNavigator = () => {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator
-        // initialRouteName="secondryNavigator" 
+      <Stack.Navigator 
+         initialRouteName="secondryNavigator" 
         //initialRouteName="addshop" 
         //initialRouteName="signup"
         //initialRouteName="login"
-        initialRouteName="login"
+        //initialRouteName="login"
+        //initialRouteName="profile"
         screenOptions={{
+          animationEnabled:false,
           headerShown: true,
           headerStyle: {
             backgroundColor: DARKGREEN, 

@@ -51,28 +51,15 @@ class index extends Component {
           const User = await getUserDetails(data.user.uid);
           this.setState({...state, uid: data.user.uid, user: User});
           setData(User);
-        }).then(()=>{
-          const { navigation } = this.props;
-          navigation.navigate('profile')
-          
+        })
+        .then(() => { 
+          this.props.navigation.navigate('profile');
         })
         .catch((error) => {
           alert('Error occured ', error);
           console.error(error);
         });
     }
-  }
-
-  testState() {
-    console.log(JSON.stringify(this.state, null, 2));
-  }
-
-  testStorage() {
-    console.log(JSON.stringify(getData()));
-  }
-
-  clearStorage() {
-    clearAppData();
   }
 
   render() {
@@ -102,33 +89,9 @@ class index extends Component {
           <Button
             title={'Submit'}
             onPress={() => {
-              this.submitForm(); 
+              this.submitForm();
             }}
           />
-          <Text>.</Text>
-          <Button
-            title={'Clear storage'}
-            onPress={() => {
-              this.clearStorage()
-            }}
-          />
-          <Text>.</Text>
-
-          <Button
-            title={'test storage'}
-            onPress={() => {
-              this.testStorage()
-            }}
-          />
-
-          <Text>.</Text>
-          <Button
-            title={'Test state'}
-            onPress={() => {
-              this.testState();
-            }}
-          />
-          <Text>.</Text>
         </View>
       </ScrollView>
     );

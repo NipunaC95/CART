@@ -1,56 +1,55 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
-import {getData} from '../../store';
-import {Button} from 'native-base';
+import {Text, View, StyleSheet, Image , Button} from 'react-native';
+import {getData} from '../../store'; 
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import ProfileImageSection from './../../components/profileImageSection'
 
 export class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
+      user: {
+        email:'',
+        name:''
+      },
     };
-
   }
 
-  async componentDidMount(){
-
-    const user = await getData();
-    this.setState({user});
-    
+  async componentDidMount() {
+   const user = await getData();
+   this.setState({...this.state, user})
   }
 
-
-
-   showState(){
-    //const user =wa getData();  
-    console.log(JSON.stringify(this.state, null, 2));
-
-  }
- 
- 
-
-
-
-  render() {
- 
-
- 
-  
+  render() { 
     return (
       <View style={styles.container}>
-        <Text>Profile </Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Profile </Text>
+        </View>
 
-        <Text>Name: {this.state.user.name}</Text>
-        <Text>Email : {this.state.user.email}</Text>
-        <Text>UID : {this.state.user.uid}</Text>
-        <Text>
-          varified email ? : {this.state.user.emailVerified ? ' Yes' : ' No'}
-        </Text>
-        <Image source={{uri: this.state.user.image}} />
+        <ProfileImageSection  />
 
-        <Button
+        <View style={styles.profileInfoContainer}>
+          <View style={styles.profileInfo}>
+
+            <Text style={styles.profileInfoText}>
+            <Icon name="account" style={styles.icon3}/> Name: {this.state.user.name}
+            </Text>
+
+
+            <Text style={styles.profileInfoText}>
+              Email : {this.state.user.email}
+            </Text>
+            
+            <Text style={styles.profileInfoText}>
+              Lives in  ? : Colombo
+            </Text>
+          </View>
+        </View>
+
+        <Button title='Delet acount'
           onPress={() => {
-           this.showState()
+            alert('Delete account')
           }}
         />
       </View>
@@ -64,6 +63,43 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     zIndex: 0,
     elevation: 1,
+  },
+
+  titleContainer:{
+         position:'relative',
+         top:40,
+         left:10
+  },
+  title:{
+ fontSize:30
+  },
+
+  imageContainer: {
+    position:'relative',
+    top:50,
+    padding:20,
+    alignItems: 'center',
+    backgroundColor:'red'
+  },
+
+  image: {
+    height: 230,
+    width: 230,
+    borderRadius: 115,
+    resizeMode: 'cover',
+  },
+  profileInfo: {
+    alignItems: 'baseline',
+  },
+
+  profileInfoText: {
+    fontSize: 18,
+  },
+ 
+
+  profileInfoContainer: {
+    marginTop: 50,
+    alignItems: 'center',
   },
 });
 

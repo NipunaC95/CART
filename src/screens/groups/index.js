@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, FlatList, SafeAreaView, View, StyleSheet} from 'react-native';
 import {getShops} from './../../network/shops';
 
-import ShopCard from './../../components/groupCard';
+import ShopCard from '../../components/groupCard';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 class GroupScreen extends Component {
   constructor(props) {

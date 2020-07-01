@@ -1,38 +1,91 @@
-import React , {useState} from 'react';
+import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
-import { addShop } from '../../network/shops';
- 
-export default function index() {
-  const [shopName, setShopName] = useState('');
-  const [location, setLocation] = useState('');
-  const [image, setImage] = useState('');
+import {addShop} from '../../network/shops';
+import {getData} from './../../store';
 
-  const submitShop = () => {
-    alert(shopName + ' ' + location)
-    const shop ={ name:shopName , location , admin:"Test user"}
-    addShop(shop)
-  
+class index extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: '',
+      shopName: '',
+      location: '',
+    };
+  }
+  setShopName(shopName) {
+    const state = this.state;
+    this.setState({
+      ...state,
+      shopName,
+    });
+  }
+
+  setLocation(location) {
+    const state = this.state;
+    this.setState({
+      ...state,
+      location,
+    });
+  }
+
+  setImage(image) {
+    const state = this.state;
+    this.setState({
+      ...state,
+      image,
+    });
+  }
+
+  async componentDidMount() {
+    const user = await getData();
+    this.setState({user});
+  }
+
+  submitShop = () => {
+    const shop = {
+      name: this.state.shopName,
+      location:this.state.location,
+      admin: this.state.user.name,
+      uid: this.state.user.uid,
+    };
+    
+   // console.log(JSON.stringify(shop),null,2)
+    addShop(shop);
   };
 
-  return (
-    <View style={style.container}>
-      <Text style={style.text}>Name </Text>
-      <TextInput style={style.input}  onChangeText={(e)=>{setShopName(e)}}></TextInput>
+  render() {
+    return (
+      <View style={style.container}>
+        <Text style={style.text}>Name </Text>
+        <TextInput
+          style={style.input}
+          onChangeText={(e) => {
+            this.setShopName(e);
+          }}></TextInput>
 
-      <Text style={style.text}>Location </Text>
-      <TextInput style={style.input}  onChangeText={(e)=>{setLocation(e)}}></TextInput>
+        <Text style={style.text}>Location </Text>
+        <TextInput
+          style={style.input}
+          onChangeText={(e) => {
+            this.setLocation(e);
+          }}></TextInput>
 
-      <Text style={style.text}>Image</Text>
-      <Button title={'Selcet image'} />
+        <Text style={style.text}>Image</Text>
+        <Button title={'Selcet image'} />
 
-      <View style={style.submitContainer}>
-        <Button title={'Add Shop'}  onPress={()=>{submitShop()}}/>
+        <View style={style.submitContainer}>
+          <Button
+            title={'Add Shop'}
+            onPress={() => {
+              this.submitShop();
+            }}
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
 const style = StyleSheet.create({
   container: {
     height: '100%',
@@ -56,3 +109,4 @@ const style = StyleSheet.create({
     marginTop: 40,
   },
 });
+export default index;

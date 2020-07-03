@@ -7,7 +7,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import styles from "./styles";
 import { updateName } from "./../../network/userProfile"; 
 import { withNavigation } from 'react-navigation';
-import { logOut } from "./../../network/users";
+import { logOut , deleteUser } from "./../../network/users";
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -60,6 +60,14 @@ export class ProfileScreen extends Component {
     clearAppData();
     this.props.navigation.navigate('login') 
   }
+
+
+  handleDelete =() =>{
+    deleteUser();
+    clearAppData();
+    this.props.navigation.navigate('login') 
+  }
+
 
   render() {
     return (
@@ -141,7 +149,7 @@ export class ProfileScreen extends Component {
         <Button
           title="Delete acount"
           onPress={() => {
-            alert('Delete account');
+            this.handleDelete();
           }}
         />
       </View>

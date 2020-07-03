@@ -50,5 +50,16 @@ const getUserDetails = async (userId)=>{
   return doc.data();  
 }  
 
+
+const deleteUser = async (userId)=>{  
+  var user = await firebase.auth().currentUser;
+
+  user.delete().then( async function() {
+    const doc = await firestore().collection('Users').doc(userId).delete()  
+  }, function(error) {
+    // An error happened.
+  }); 
+}  
+
  
-export {signUp, logOut, logIn , getUserDetails };
+export {signUp, logOut, logIn , getUserDetails , deleteUser };

@@ -53,7 +53,7 @@ class index extends Component {
           setData(User);
         })
         .then(() => { 
-          this.props.navigation.navigate('profile');
+          this.props.navigation.navigate('secondryNavigator');
         })
         .catch((error) => {
           alert('Error occured ', error);

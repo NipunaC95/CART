@@ -14,10 +14,10 @@ const mainStackNavigator = () => {
     <NavigationContainer>
 
       <Stack.Navigator 
-         initialRouteName="secondryNavigator" 
+          //initialRouteName="secondryNavigator" 
         //initialRouteName="addshop" 
         //initialRouteName="signup"
-        //initialRouteName="login"
+       initialRouteName="login"
         //initialRouteName="login"
         //initialRouteName="profile"
         screenOptions={{

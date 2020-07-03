@@ -3,6 +3,9 @@ import {View, Text, StyleSheet, Button} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {addShop} from '../../network/shops';
 import {getData} from './../../store';
+import { withNavigation } from 'react-navigation';
+
+
 
 class index extends Component {
   constructor(props) {
@@ -50,8 +53,9 @@ class index extends Component {
       uid: this.state.user.uid,
     };
     
-   // console.log(JSON.stringify(shop),null,2)
+    console.log(JSON.stringify(shop),null,2)
     addShop(shop);
+    this.props.navigation.navigate('shops')
   };
 
   render() {
@@ -109,4 +113,4 @@ const style = StyleSheet.create({
     marginTop: 40,
   },
 });
-export default index;
+export default withNavigation(index);

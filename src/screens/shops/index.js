@@ -1,56 +1,78 @@
-import React, {Component} from 'react';
-import {Text, FlatList, SafeAreaView, View, StyleSheet} from 'react-native';
-import {getShops} from './../../network/shops';
-import {withNavigation} from 'react-navigation';
+import React, {useState, useEffect} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import ShopCard from './../../components/shopCard';
-import {  TouchableOpacity } from 'react-native-gesture-handler';
-class shopsScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shopList: [],
-    };
+
+const shopsScreen = ({navigation}) => {
+  const [loading, setLoading] = useState(true); // Set loading to true on component mount
+  const [shops, setshops] = useState([]); // Initial empty array of shops
+
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Shops')
+      .onSnapshot((querySnapshot) => {
+        const shops = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          shops.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+
+        setshops(shops);
+        setLoading(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
+
+  const navigateToAddShop = () => {
+    navigation.navigate('addShop');
+  };
+
+  if (loading) {
+    return <ActivityIndicator />;
   }
 
-  async componentDidMount() {
-    const shopList = await getShops();
-    this.setState({shopList});
-  }
-
-  navigateToAddShop(){
-      //alert("Hello !")
-      this.props.navigation.navigate('addShop')
-  }
-
-  render() {
-    return (
-      <View>
-        <View style={styles.container}> 
-          <FlatList
-  showsVerticalScrollIndicator ={false} 
-            data={this.state.shopList}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({item}) => {
-              return (
-                <ShopCard
-                  name={item.name}
-                  location={item.location}
-                  admin={item.admin}
-                  photo={item.image}
-                />
-              );
-            }}
-          />
-          <View style={styles.plus}>
-            <TouchableOpacity style={styles.plusWrapper} onPress={()=>{this.navigateToAddShop()}}> 
+  return (
+    <View>
+      <View style={styles.container}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={shops}
+          renderItem={({item}) => {
+            return (
+              <ShopCard
+                name={item.name}
+                location={item.location}
+                admin={item.admin}
+                photo={item.image}
+              />
+            );
+          }}
+        />
+        <View style={styles.plus}>
+          <TouchableOpacity
+            style={styles.plusWrapper}
+            onPress={() => {
+              navigateToAddShop();
+            }}>
             <Text style={styles.plusText}>+</Text>
-            </TouchableOpacity >
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   plusHolder: {
@@ -59,12 +81,12 @@ const styles = StyleSheet.create({
     top: 10,
   },
 
-  plusWrapper:{  
+  plusWrapper: {
     width: 35,
     height: 35,
-    alignContent:"center", 
-    alignItems:"center",
-    justifyContent: 'center', 
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   container: {
@@ -95,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(shopsScreen);
+export default shopsScreen;

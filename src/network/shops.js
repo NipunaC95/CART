@@ -4,8 +4,8 @@ const addShop = (shop ) => {
   firestore()
     .collection('Shops')
     .add({
-      name: Shop.name,
-      location: Shop.location,
+      name: shop.name,
+      location: shop.location,
       date: new Date(),
       admin:shop.user,
       adminUID:shop.uid

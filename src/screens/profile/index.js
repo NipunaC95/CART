@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import {Text, View, Modal, Image, Button , TouchableOpacity , TextInput} from 'react-native';
-import {getData} from '../../store';
+import {Text, View, Modal, Image, Button , TouchableOpacity , TextInput, Keyboard} from 'react-native';
+import {getData ,clearAppData} from '../../store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfileImageSection from './../../components/profileImageSection';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'; 
 import styles from "./styles";
+import { updateName } from "./../../network/userProfile"; 
+import { withNavigation } from 'react-navigation';
+import { logOut } from "./../../network/users";
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -38,11 +41,25 @@ export class ProfileScreen extends Component {
     });
   };
 
+  handleOnChangeName(text){ 
+    updateName(this.state.user.uid, text)
+    const oldUser = this.state.user
+    const newUser = {...oldUser,name:text} 
+    this.setState({...this.state,user:newUser,showModal: false}) 
+  
+  }
   
   handleClick = () => { 
     console.log('Clicked');
     this.setState({...this.state, showModal: false});
   };
+
+
+  handleLogOut =() =>{
+    logOut();
+    clearAppData();
+    this.props.navigation.navigate('login') 
+  }
 
   render() {
     return (
@@ -104,7 +121,7 @@ export class ProfileScreen extends Component {
                   <Button
                     title="Hide"
                     onPress={() => {
-                      this.handleClick();
+                      this.handleOnChangeName(this.state.text);
                     }}
                   />
                 </View>
@@ -118,7 +135,7 @@ export class ProfileScreen extends Component {
         <Button
           title="Logout"
           onPress={() => {
-            alert('Delete account');
+            this.handleLogOut()
           }}
         />
         <Button
@@ -132,4 +149,4 @@ export class ProfileScreen extends Component {
   }
 }
 
-export default ProfileScreen;
+export default withNavigation(ProfileScreen);

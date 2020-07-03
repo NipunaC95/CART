@@ -39,4 +39,21 @@ const updateImage = (uid, imagePath) => {
   );
 };
 
-export {updateImage}; 
+
+const updateName = async (uid, name) => {
+  console.log(uid, name);
+      firestore()
+        .collection('Users')
+        .doc(uid)
+        .update({
+          name,
+        })
+        .then(() => {
+          console.log('User updated!');
+        }); 
+      const oldData = await getData();
+      const newData = {...oldData,name};
+      setData(newData);
+    } 
+
+export {updateImage , updateName}; 

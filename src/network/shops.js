@@ -26,4 +26,33 @@ const getShops = async ( ) => {
   return ShopList;
 };
 
-export {addShop, getShops};
+
+const updateShop = async ( shop) => {
+  console.log(JSON.stringify(shop))
+  firestore()
+  .collection('Shops')
+  .doc(shop.key)
+  .update({
+    name:shop.name,
+    location:shop.location
+  })
+  .then((snapshot) => snapshot.get())
+  //.then((ShopData) => addComplete(ShopData.data())) //This brings submitted fod item top the state of the second screen
+  .catch((error) => console.log(error));
+};
+
+
+const deleteShop = async ( key) => {
+  console.log(JSON.stringify(key))
+  firestore()
+  .collection('Shops')
+  .doc(key)
+  .delete()
+  .then(() => {
+    console.log('User deleted!');
+  });
+};
+
+
+
+export {addShop, getShops , updateShop , deleteShop};

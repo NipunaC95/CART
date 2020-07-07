@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TextInput, StyleSheet, Button , Alert} from 'react-native';
 import {setCustomData, getCustomData} from './../../store';
+import { updateShop , deleteShop } from "../../network/shops";
 class index extends Component {
   constructor(props) {
     super(props);
@@ -15,21 +16,25 @@ class index extends Component {
     this.setState({...data});
   }
 
-  updateShop() {
-    alert('Update the shop');
+  updateShop(shop) {
+    updateShop(shop);
+    this.props.navigation.navigate('shops')
   }
 
-  deleteShop(shopId) {
+  deleteShop(shop) {
     Alert.alert(
       'Delete',
-      `Do you really want to delete this shop (${shopId}) ?`,
+      `Do you really want to delete this shop (${shop}) ?`,
       [
         {
           text: 'No',
           onPress: () => console.log('No Pressed'),
           style: 'cancel',
         },
-        {text: 'Yes', onPress: () => console.log('OK Pressed')},
+        {text: 'Yes', onPress: () => {
+          deleteShop(shop);
+          this.props.navigation.navigate('shops')
+        }},
       ],
       {cancelable: false},
     );
@@ -58,17 +63,9 @@ class index extends Component {
             value={this.state.location}
             style={styles.textInput}
           />
-          <Text style={styles.inputTitles}>Shop name</Text>
-          <TextInput
-            placeholder={'Name'}
-            onChangeText={(name) => {
-              this.setState({...this.state, name});
-            }}
-            value={this.state.name}
-            style={styles.textInput}
-          />
 
-          <Button title={'Update'} onPress={() => this.updateShop(this.state.key)} />
+
+          <Button title={'Update'} onPress={() => this.updateShop(this.state)} />
           <Text>{''}</Text>
           <Button title={'Delete'} onPress={() => this.deleteShop(this.state.key)} />
         </View>

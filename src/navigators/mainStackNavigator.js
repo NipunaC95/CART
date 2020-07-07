@@ -8,6 +8,7 @@ import {
   SignUpScreen,
   LoginScreen,
   ProfileScreen,
+  AddGroupScreen,
 } from './../screens';
 import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
@@ -18,12 +19,14 @@ const mainStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="secondryNavigator"
+       // initialRouteName="secondryNavigator"
         //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"
         //initialRouteName="login"
         //initialRouteName="profile"
+        initialRouteName="addGroup"
+        
         screenOptions={{
           animationEnabled: false,
           headerShown: true,
@@ -80,7 +83,11 @@ const mainStackNavigator = () => {
           name="secondryNavigator"
           component={secondryTabNavigator}
           options={{title: 'Cart', headerShown: true}}
-          defa
+        />
+        <Stack.Screen
+          name="addGroup"
+          component={AddGroupScreen}
+          options={{title: 'Create a new group', headerShown: true}}
         />
       </Stack.Navigator>
     </NavigationContainer>

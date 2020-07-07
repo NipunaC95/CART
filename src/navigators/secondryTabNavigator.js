@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native'; 
-import {ShopsScreen , GroupsScreen , profileScreen ,requirementsScreen } from './../screens/index'   
+import {ShopsScreen , GroupsScreen , ProfileScreen ,RequirementsScreen } from './../screens/index'   
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'; 
 
 const Tab = createMaterialTopTabNavigator();
@@ -16,8 +16,8 @@ const secondryTabNavigator = () => {
         }}>
         <Tab.Screen name="shops" component={ShopsScreen} />
         <Tab.Screen name="groups" component={GroupsScreen} /> 
-        <Tab.Screen name="requests" component={requirementsScreen} /> 
-        <Tab.Screen name="profile" component={profileScreen} /> 
+        <Tab.Screen name="requests" component={RequirementsScreen} /> 
+        <Tab.Screen name="profile" component={ProfileScreen} /> 
       </Tab.Navigator> 
   );
 };

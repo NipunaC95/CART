@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react'; 
 import {
   ActivityIndicator,
   FlatList,
   View,
   Text,
   StyleSheet,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import ShopCard from './../../components/shopCard';
+import {withNavigation} from 'react-navigation';
+
+
+import { setCustomData  } from "./../../store";
 
 const shopsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -30,47 +35,55 @@ const shopsScreen = ({navigation}) => {
         setshops(shops);
         setLoading(false);
       });
-
-    // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, []);
 
-  const navigateToAddShop = () => {
-    navigation.navigate('addShop');
+  const navigateToAddShop = (user) => {
+    navigation.navigate('addShop', user);
+  };
+
+  const navigateToEditShop = (item ) => {
+    setCustomData('shop' , item)
+    navigation.navigate('editShop');
   };
 
   if (loading) {
     return <ActivityIndicator />;
   }
 
-  return (
-    <View>
-      <View style={styles.container}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={shops}
-          renderItem={({item}) => {
-            return (
-              <ShopCard
-                name={item.name}
-                location={item.location}
-                admin={item.admin}
-                photo={item.image}
-              />
-            );
-          }}
-        />
-        <View style={styles.plus}>
-          <TouchableOpacity
-            style={styles.plusWrapper}
-            onPress={() => {
-              navigateToAddShop();
-            }}>
-            <Text style={styles.plusText}>+</Text>
-          </TouchableOpacity>
+  return ( 
+     
+        <View>
+          <View style={styles.container}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={shops}
+              renderItem={({item}) => {
+                return (
+                  <ShopCard
+                    name={item.name}
+                    location={item.location}
+                    admin={item.admin}
+                    photo={item.image}
+                    onPress={() => {
+                      navigateToEditShop(item);
+                    }}
+                  />
+                );
+              }}
+            />
+            <View style={styles.plus}>
+              <TouchableOpacity
+                style={styles.plusWrapper}
+                onPress={() => {
+                  navigateToAddShop();
+                }}>
+                <Text style={styles.plusText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+    
   );
 };
 
@@ -117,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default shopsScreen;
+export default withNavigation(shopsScreen);

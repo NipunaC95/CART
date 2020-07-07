@@ -17,7 +17,7 @@ const getData = async () => {
     const stringData = await AsyncStorage.getItem('user');
     // console.log('retrieving string :' , stringData)
     const objectData = JSON.parse(stringData);
-   // console.log('retrieving object :' , objectData)
+    // console.log('retrieving object :' , objectData)
 
     if (objectData !== null) {
       return objectData;
@@ -35,4 +35,33 @@ const clearAppData = async function () {
     console.error('Error clearing app data.');
   }
 };
-export {setData, getData, clearAppData};
+
+const setCustomData = async (Key, Value) => {
+  try {
+    if (Value !== null) {
+      const stringData = JSON.stringify(Value);
+      //console.log('saving string : ', stringData)
+      await AsyncStorage.setItem(Key, stringData);
+    }
+  } catch (error) {
+    console.log('Error occured while writing data to the store ' + error);
+  }
+};
+
+const getCustomData = async (key) => {
+  console.log(`Get data of ${key}`)
+  try {
+    const stringData = await AsyncStorage.getItem(key);
+    // console.log('retrieving string :' , stringData)
+    const objectData = JSON.parse(stringData);
+    // console.log('retrieving object :' , objectData)
+
+    if (objectData !== null) {
+      return objectData;
+    }
+  } catch (error) {
+    console.log('Error occured while retrieving data from store ' + error);
+  }
+};
+
+export {setData, getData, setCustomData, getCustomData, clearAppData};

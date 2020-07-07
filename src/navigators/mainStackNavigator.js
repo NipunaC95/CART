@@ -1,70 +1,87 @@
 import * as React from 'react';
 import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import  secondryTabNavigator   from "./secondryTabNavigator";
-import { AddShop } from "./../screens"
-import  Login from './../screens/login'
-import SignUp from './../screens/signUp'
-import { DARKGREEN , LIGHTGREEN } from "./../styles/colors";
-import ProfileScreen from "./../screens/profile";
+import secondryTabNavigator from './secondryTabNavigator';
+import {
+  AddShop,
+  EditShop,
+  SignUpScreen,
+  LoginScreen,
+  ProfileScreen,
+} from './../screens';
+import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
+
+//AddShop ,  EditShop , LoginScreen ,SignUpScreen ,ShopsScreen , GroupsScreen ,profileScreen , requirementsScreen
 
 const mainStackNavigator = () => {
   return (
     <NavigationContainer>
-
-      <Stack.Navigator 
-         initialRouteName="secondryNavigator" 
-        //initialRouteName="addshop" 
+      <Stack.Navigator
+        initialRouteName="secondryNavigator"
+        //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"
         //initialRouteName="login"
         //initialRouteName="profile"
         screenOptions={{
-          animationEnabled:false,
+          animationEnabled: false,
           headerShown: true,
           headerStyle: {
-            backgroundColor: DARKGREEN, 
-            elevation:0 
+            backgroundColor: DARKGREEN,
+            elevation: 0,
           },
           headerTintColor: 'white',
           headerTitleAlign: 'left',
-          headerTitleStyle: { 
+          headerTitleStyle: {
             fontSize: 20,
-    elevation: 0,
-          }, 
-        } 
-
-        }>
-          
+            elevation: 0,
+          },
+        }}>
         <Stack.Screen
           name="login"
-          component={Login}
+          component={LoginScreen}
           options={{headerShown: false}}
-        /> 
-      
+        />
+
         <Stack.Screen
           name="profile"
           component={ProfileScreen}
           options={{headerShown: false}}
         />
- 
+
         <Stack.Screen
           name="addShop"
           component={AddShop}
-          options={{headerShown: true , title:'Add a new shop' ,headerTitleAlign:'left' }}
+          options={{
+            headerShown: true,
+            title: 'Add a new shop',
+            headerTitleAlign: 'left',
+          }}
         />
+
+        <Stack.Screen
+          name="editShop"
+          component={EditShop}
+          options={{
+            headerShown: true,
+            title: 'Edit/ Delete a shop',
+            headerTitleAlign: 'left',
+          }}
+        />
+
         <Stack.Screen
           name="signup"
-          component={SignUp}
+          component={SignUpScreen}
           options={{headerShown: false}}
         />
- 
-        <Stack.Screen name="secondryNavigator" 
-        component={ secondryTabNavigator} 
-        options={{title:'Cart' ,headerShown: true ,   }}
-        defa/>
- 
+
+        <Stack.Screen
+          name="secondryNavigator"
+          component={secondryTabNavigator}
+          options={{title: 'Cart', headerShown: true}}
+          defa
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

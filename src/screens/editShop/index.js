@@ -11,8 +11,7 @@ class index extends Component {
   }
 
   async componentDidMount() {
-    const data = await getCustomData('shop');
-    console.log(JSON.stringify(data, null, 2));
+    const data = await getCustomData('shop'); 
     this.setState({...data});
   }
 

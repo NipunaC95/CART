@@ -14,6 +14,7 @@ class index extends Component {
       image: '',
       shopName: '',
       location: '',
+      name:''
     };
   }
   setShopName(shopName) {
@@ -59,6 +60,7 @@ class index extends Component {
   };
 
   render() {
+    console.log(JSON.stringify(this.state.user , null ,2))
     return (
       <View style={style.container}>
         <Text style={style.text}>Name </Text>

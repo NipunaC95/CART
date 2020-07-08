@@ -20,13 +20,13 @@ const mainStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        // initialRouteName="secondryNavigator"
+         initialRouteName="secondryNavigator"
         //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"
         //initialRouteName="login"
         //initialRouteName="profile"
-        initialRouteName="addGroupMembers"
+        //initialRouteName="addGroupMembers"
         //initialRouteName="createGroup"
         screenOptions={{
           animationEnabled: false,

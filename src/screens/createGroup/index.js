@@ -19,12 +19,16 @@ class index extends Component {
       loading: true,
       name: '', 
       memberArray: '',
+      admin:{}
     };
   }
 
-  createGroup =  () => { 
+  createGroup =  async() => { 
+    const me = await getData();
+    const {name , uid } = await me 
+    
     const group ={
-      admin : this.state.name,
+      admin : {name , uid},
       name:this.state.name,
       users:this.state.memberArray,
       date: new Date()
@@ -48,8 +52,7 @@ class index extends Component {
       memberArray.push(members[a]);
     }
     this.setState({
-      ...this.state,
-      admin:me,
+      ...this.state, 
       members,
       memberArray,
       loading: false,
@@ -75,14 +78,14 @@ class index extends Component {
           ) : (
             <FlatList
               data={this.state.memberArray}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item.date}
               renderItem={({item}) => {
                 return <Text> {item.name}</Text>;
               }}
             />
           )}
           <Text> {''}</Text>
-          <Button title={'create Group'} onPress={this.createGroup()} />
+          <Button title={'create Group'} onPress={()=>this.createGroup()} />
         </View>
       </View>
     );

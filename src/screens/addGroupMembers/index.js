@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import UserCard from '../../components/userCard';
-import {getCustomData,   setCustomData} from '../../store';
-import {Value} from 'react-native-reanimated';
+import {   setCustomData} from '../../store'; 
 
 const index = ({navigation}) => {
   const [users, setUsers] = useState([]);

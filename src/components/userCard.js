@@ -1,21 +1,28 @@
 import React, {useState} from 'react';
 import {Text, StyleSheet, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {getCustomData, setCustomData} from '../store'; 
 const truePhoto = require('./../assets/checkBoxes/checked.png');
 const falsePhoto = require('./../assets/checkBoxes/unchecked.png');
 
-const ShopCard = ({name, photo, onPress, onLongPress}) => {
+const ShopCard = ({name, photo, uid , item, toggleItem }) => {
   const [checked, setchecked] = useState(false);
+
+  const addUserToList = async () => {
+    toggleItem(item,checked)
+    setchecked(!checked);
+  };
+
+
 
   return (
     <TouchableWithoutFeedback
       style={styles.card}
       onPress={() => {
-        setchecked(!checked);
+        addUserToList();
       }}>
       <Image source={{uri: photo}} style={styles.image} />
       <Text style={styles.title}>{name} </Text>
-
       <Image
         source={checked ? truePhoto : falsePhoto}
         style={styles.selection}
@@ -69,4 +76,24 @@ const styles = StyleSheet.create({
   },
 });
 
+// var select = false;
+// selected.forEach((element) => {
+//   if (element == user) {
+//     select = true;
+//   }
+// });
+
+// if (select) {
+//   var newSet = [];
+//   selected.forEach((user) => {
+//     if (item != user) {
+//       newSet.push(item);
+//     }
+//   });
+//   setSelected({...newSet});
+// } else {
+//   setSelected({...selected, [item.uid]: item});
+// }
+
+// setSelected(item);
 export default ShopCard;

@@ -48,6 +48,10 @@ const setCustomData = async (Key, Value) => {
   }
 };
 
+const clearCustomData = async(key) =>{
+ await AsyncStorage.removeItem(key)
+}
+
 const getCustomData = async (key) => {
   console.log(`Get data of ${key}`)
   try {
@@ -64,4 +68,4 @@ const getCustomData = async (key) => {
   }
 };
 
-export {setData, getData, setCustomData, getCustomData, clearAppData};
+export {setData, getData, setCustomData, getCustomData, clearCustomData , clearAppData };

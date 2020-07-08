@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Button, Touca} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import UserCard from '../../components/userCard';
+import {getCustomData, clearCustomData} from '../../store';
 
 const index = () => {
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -13,11 +15,11 @@ const index = () => {
         const users = [];
 
         querySnapshot.forEach((documentSnapshot) => {
-            console.log()
+          console.log();
           users.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
-            selected:false
+            selected: false,
           });
         });
 
@@ -26,27 +28,50 @@ const index = () => {
     return () => subscriber();
   }, []);
 
+  const toggleItem = (item, state) => {
+    console.log(item.name);
+    if (state == false) {
+      setSelected({...selected, [item.uid]: item});
+    } else {
+      var uidUser = item.uid;
+      var selectedObject = selected;
+      delete selectedObject[uidUser];
+      setSelected({...selectedObject});
+    }
+  };
+
+  const showItems = () => {
+    console.log(JSON.stringify(selected, null, 2));
+  };
+
   return (
     <View>
+      <Button
+        onPress={() => {
+          showItems();
+        }}
+        title="Learn More"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+
       <Text>Group name</Text>
 
       <FlatList
         showsVerticalScrollIndicator={false}
         data={users}
         renderItem={({item}) => {
-            
           return (
             <UserCard
+              item={item}
               name={item.name}
               photo={item.image}
-              onPress={() => {
-                navigateToEditShop(item);
-              }}
+              uid={item.uid}
+              toggleItem={toggleItem}
             />
           );
         }}
       />
-     
     </View>
   );
 };

@@ -13,8 +13,6 @@ const ShopCard = ({name, photo, uid , item, toggleItem }) => {
     setchecked(!checked);
   };
 
-
-
   return (
     <TouchableWithoutFeedback
       style={styles.card}

@@ -10,20 +10,22 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import UserCard from '../../components/userCard';
-import {   setCustomData} from '../../store'; 
+import {   setCustomData, getData} from '../../store'; 
 
 const index = ({navigation}) => {
   const [users, setUsers] = useState([]);
   const [selected, setSelected] = useState([]); 
+  const [current, setCurrent] = useState({})
+  
+  
 
   useEffect(() => {
     const subscriber = firestore()
       .collection('Users')
-      .onSnapshot((querySnapshot) => {
+      .onSnapshot(async(querySnapshot) => {
         const users = [];
 
-        querySnapshot.forEach((documentSnapshot) => {
-          console.log();
+        querySnapshot.forEach((documentSnapshot) => { 
           users.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -31,7 +33,9 @@ const index = ({navigation}) => {
           });
         });
 
-        setUsers(users);
+        const me  = await getData()   
+        const filtered = users.filter(user => user.uid != me.uid); 
+        setUsers(filtered);
       });
     return () => subscriber();
   }, []);
@@ -64,6 +68,7 @@ const index = ({navigation}) => {
         data={users}
         renderItem={({item}) => {
           return (
+            
             <UserCard
               item={item}
               name={item.name}

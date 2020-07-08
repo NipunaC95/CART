@@ -1,12 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, Button, Touca} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Button,
+  TextInput,
+} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import UserCard from '../../components/userCard';
-import {getCustomData, clearCustomData} from '../../store';
+import {getCustomData,   setCustomData} from '../../store';
+import {Value} from 'react-native-reanimated';
 
-const index = () => {
+const index = ({navigation}) => {
   const [users, setUsers] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([]); 
 
   useEffect(() => {
     const subscriber = firestore()
@@ -40,22 +49,16 @@ const index = () => {
     }
   };
 
-  const showItems = () => {
-    console.log(JSON.stringify(selected, null, 2));
+
+  const navigateToCreateGroup   = () => {
+     setCustomData ('userList', selected) 
+     navigation.navigate('createGroup')
+  
   };
 
   return (
-    <View>
-      <Button
-        onPress={() => {
-          showItems();
-        }}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-
-      <Text>Group name</Text>
+    <View style={styles.container}>
+      <Text style={styles.inputTitles}>Selcet members </Text>
 
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -72,6 +75,16 @@ const index = () => {
           );
         }}
       />
+
+      <View style={styles.plus}>
+        <TouchableOpacity
+          style={styles.plusWrapper}
+          onPress={() => {
+            navigateToCreateGroup();
+          }}>
+          <Text style={styles.plusText}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -128,6 +141,39 @@ const styles = StyleSheet.create({
     marginTop: 100,
     // alignContent:'center',
     alignItems: 'center',
+  },plusWrapper: {
+    width: 35,
+    height: 35,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  container: {
+    height: '100%',
+    paddingHorizontal: '5%',
+    zIndex: 0,
+    elevation: 1,
+  },
+
+  plus: {
+    elevation: 3,
+    position: 'absolute',
+    right: '5%',
+    bottom: '5%',
+    backgroundColor: '#0F4021',
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,
+  },
+
+  plusText: {
+    color: 'white',
+    fontSize: 25,
   },
 });
 

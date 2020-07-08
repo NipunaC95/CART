@@ -53,7 +53,7 @@ const clearCustomData = async(key) =>{
 }
 
 const getCustomData = async (key) => {
-  console.log(`Get data of ${key}`)
+ // console.log(`Get data of ${key}`)
   try {
     const stringData = await AsyncStorage.getItem(key);
     // console.log('retrieving string :' , stringData)

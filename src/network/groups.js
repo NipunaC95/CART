@@ -1,15 +1,9 @@
 import firestore from '@react-native-firebase/firestore';
 
-const addGroup = (Group, addComplete) => {
+const addGroup = (group) => {
   firestore()
     .collection('Groups')
-    .add({
-      name: Shop.name,
-      location: Shop.location,
-      date: new Date(),
-    })
-    .then((snapshot) => snapshot.get())
-    .then((ShopData) => addComplete(ShopData.data())) //This brings submitted fod item top the state of the second screen
+    .add(group) 
     .catch((error) => console.log(error));
 };
 

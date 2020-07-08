@@ -70,9 +70,10 @@ const shopsScreen = ({navigation}) => {
                 location={item.location}
                 admin={item.admin}
                 photo={item.image}
-                onPress={() => {
+                onLongPress={() => {
                   navigateToEditShop(item);
                 }}
+                onPress={()=>{alert('Show')}}
               />
             );
           }}

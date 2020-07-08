@@ -10,7 +10,8 @@ import {
   ProfileScreen,
   AddGroupMembersScreen,
   CreateGroupScreen , 
-  ViewGroupScreen
+  ViewGroupScreen , 
+  AddRequestsScreen
 } from './../screens';
 import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
@@ -21,7 +22,8 @@ const mainStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-         initialRouteName="secondryNavigator"
+         initialRouteName="addRequest"
+         //initialRouteName="secondryNavigator"
         //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"
@@ -102,6 +104,14 @@ const mainStackNavigator = () => {
           component={ViewGroupScreen}
           options={{title: 'View group requests', headerShown: true}}
         />
+
+
+<Stack.Screen
+          name="addRequest"
+          component={AddRequestsScreen}
+          options={{title: 'Create a request', headerShown: true}}
+        />
+  
       </Stack.Navigator>
     </NavigationContainer>
   );

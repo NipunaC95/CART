@@ -40,14 +40,9 @@ const groupsScreen = ({navigation}) => {
     navigation.navigate('addGroupMembers', user);
   };
 
-  const navigateToEditShop = async (item) => {
-    const user = await getData();
-    if (item.adminUID == user.uid) {
-      setCustomData('shop', item);
-      navigation.navigate('editShop');
-    } else {
-      alert('You should be the admin to edit this groups details ');
-    }
+  const navigateToViewGroup= async (item) => { 
+      setCustomData('groupInfo', item);
+      navigation.navigate('viewGroup'); 
   };
 
   if (loading) {
@@ -67,7 +62,7 @@ const groupsScreen = ({navigation}) => {
                 location={item.location} 
                 photo={item.image}
                 onPress={() => {
-                  navigateToEditShop(item);
+                  navigateToViewGroup(item);
                 }}
               />
             );

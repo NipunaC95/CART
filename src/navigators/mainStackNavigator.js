@@ -9,7 +9,8 @@ import {
   LoginScreen,
   ProfileScreen,
   AddGroupMembersScreen,
-  CreateGroupScreen
+  CreateGroupScreen , 
+  ViewGroupScreen
 } from './../screens';
 import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
@@ -94,6 +95,12 @@ const mainStackNavigator = () => {
           name="createGroup"
           component={CreateGroupScreen}
           options={{title: 'Create a new group', headerShown: true}}
+        />
+
+        <Stack.Screen
+          name="viewGroup"
+          component={ViewGroupScreen}
+          options={{title: 'View group requests', headerShown: true}}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -8,5 +8,7 @@ import ProfileScreen from "./profile"
 import RequirementsScreen  from "./requirements"
 import AddGroupMembersScreen from "./addGroupMembers"
 import CreateGroupScreen from "./createGroup"
-export {  AddShop ,  EditShop , LoginScreen ,SignUpScreen ,ShopsScreen , GroupsScreen ,ProfileScreen , RequirementsScreen ,AddGroupMembersScreen ,CreateGroupScreen }
+import ViewGroupScreen from "./viewGroups";
+
+export {  AddShop ,  EditShop , LoginScreen ,SignUpScreen ,ShopsScreen , GroupsScreen ,ProfileScreen , RequirementsScreen ,AddGroupMembersScreen ,CreateGroupScreen , ViewGroupScreen }
  

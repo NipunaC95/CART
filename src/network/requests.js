@@ -23,14 +23,11 @@ const getRequests = async () => {
 };
 
 const updateRequest = async (request) => {
+  const { name ,type,price} = request;
   firestore()
     .collection('Requests')
     .doc(request.key)
-    .update({
-      name: request.name,
-      location: request.location,
-    })
-    .then((snapshot) => snapshot.get())
+    .update({name ,type,price }) 
     .catch((error) => console.log(error));
 };
 

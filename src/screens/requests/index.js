@@ -43,11 +43,11 @@ const shopsScreen = ({navigation}) => {
   }, []);
  
 
-  const navigateToEditShop = async (item) => {
+  const navigateToEditRequest= async (item) => {
     const user = await getData(); 
-    if (item.adminUID == user.uid) {
-      setCustomData('shop' , item)
-      navigation.navigate('editShop');
+    if (item.uid == user.uid) {
+      setCustomData('request' , item)
+      navigation.navigate('editRequest');
     }else{
       alert('You should be the admin to edit this request details '); 
     }   
@@ -71,10 +71,10 @@ const shopsScreen = ({navigation}) => {
                 group={item.group}
                 shop={item.admin}
                 photo={item.image}
-                onLongPress={() => {
-                  navigateToEditShop(item);
+                onPress={() => {
+                  navigateToEditRequest(item);
                 }}
-                onPress={()=>{alert('Show')}}
+               // onPress={()=>{alert('Show')}}
               />
             );
           }}

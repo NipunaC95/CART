@@ -2,11 +2,12 @@ import React from 'react';
 import {Text, StyleSheet, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const RequestCard = ({name, group, shop, photo, onPress, onLongPress}) => {
+const RequestCard = ({name, group, shop, photo, onPress, onLongPress , navigation}) => {
 
-    console.log({name, group, shop})
+  //console.log({name, group, shop})
   return (
     <TouchableWithoutFeedback
+   // onPress={onPress}
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.card}>

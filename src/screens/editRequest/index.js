@@ -1,23 +1,32 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, StyleSheet, Button , Alert} from 'react-native';
+import {View, Text, TextInput, StyleSheet, Button, Alert} from 'react-native';
 import {setCustomData, getCustomData} from './../../store';
-import { updateShop , deleteShop } from "../../network/shops";
+import {updateShop, deleteShop} from '../../network/shops';
+import {updateRequest} from '../../network/requests';
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
+      type: '',
+      price: 0,
     };
   }
 
   async componentDidMount() {
-    const data = await getCustomData('shop'); 
+    const data = await getCustomData('request');
+    console.log(JSON.stringify(data, null, 2));
     this.setState({...data});
   }
 
-  updateShop(shop) {
-    updateShop(shop);
-    this.props.navigation.navigate('shops')
+  pressOnUpdate(request) {
+    updateRequest(request);
+    this.props.navigation.navigate('requests');
+  }
+
+  updateStateData(key, value) {
+    const data = this.state;
+    this.setState({...data, [key]: value});
   }
 
   deleteShop(shop) {
@@ -30,43 +39,61 @@ class index extends Component {
           onPress: () => console.log('No Pressed'),
           style: 'cancel',
         },
-        {text: 'Yes', onPress: () => {
-          deleteShop(shop);
-          this.props.navigation.navigate('shops')
-        }},
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteShop(shop);
+            this.props.navigation.navigate('shops');
+          },
+        },
       ],
       {cancelable: false},
     );
   }
 
   render() {
-    console.log(JSON.stringify(this.state));
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.inputTitles}>Shop name</Text>
+          <Text style={styles.inputTitles}>Name</Text>
           <TextInput
-            placeholder={'Name'}
+            placeholder={'Name of the item'}
             onChangeText={(name) => {
-              this.setState({...this.state, name});
+              this.updateStateData('name', name);
             }}
             value={this.state.name}
             style={styles.textInput}
           />
-          <Text style={styles.inputTitles}>Location of the shop</Text>
+
+          <Text style={styles.inputTitles}>Type</Text>
           <TextInput
-            placeholder={'Location'}
-            onChangeText={(location) => {
-              this.setState({...this.state, location});
+            placeholder={'Type of the item'}
+            onChangeText={(type) => {
+              this.updateStateData( 'type',type);
             }}
-            value={this.state.location}
+            value={this.state.type}
             style={styles.textInput}
           />
 
+          <Text style={styles.inputTitles}>Price</Text>
+          <TextInput
+            placeholder={'Price of the item'}
+            onChangeText={(price) => {
+              this.updateStateData( 'price',price);
+            }}
+            value={this.state.price}
+            style={styles.textInput}
+          />
 
-          <Button title={'Update'} onPress={() => this.updateShop(this.state)} />
+          <Button
+            title={'Update'}
+            onPress={() => this.pressOnUpdate(this.state)}
+          />
           <Text>{''}</Text>
-          <Button title={'Delete'} onPress={() => this.deleteShop(this.state.key)} />
+          <Button
+            title={'Delete'}
+            onPress={() => this.deleteShop(this.state.key)}
+          />
         </View>
       </View>
     );

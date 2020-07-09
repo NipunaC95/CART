@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, TextInput, StyleSheet, Button, Alert} from 'react-native';
 import {setCustomData, getCustomData} from './../../store';
 import {updateShop, deleteShop} from '../../network/shops';
-import {updateRequest} from '../../network/requests';
+import {updateRequest , deleteRequest} from '../../network/requests';
 class index extends Component {
   constructor(props) {
     super(props);
@@ -29,10 +29,10 @@ class index extends Component {
     this.setState({...data, [key]: value});
   }
 
-  deleteShop(shop) {
+  deleteRequest(request) {
     Alert.alert(
       'Delete',
-      `Do you really want to delete this shop (${shop}) ?`,
+      `Do you really want to delete this request (${request}) ?`,
       [
         {
           text: 'No',
@@ -42,8 +42,8 @@ class index extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            deleteShop(shop);
-            this.props.navigation.navigate('shops');
+            deleteRequest(request);
+            this.props.navigation.navigate('secondryNavigator', { screen: 'reqests' });
           },
         },
       ],
@@ -92,7 +92,7 @@ class index extends Component {
           <Text>{''}</Text>
           <Button
             title={'Delete'}
-            onPress={() => this.deleteShop(this.state.key)}
+            onPress={() => this.deleteRequest(this.state.key)}
           />
         </View>
       </View>

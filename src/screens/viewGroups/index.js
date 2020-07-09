@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ShopCard from './../../components/shopCard';
+import RequestCard from './../../components/requestCard';
 import {withNavigation} from 'react-navigation';
 
 import {setCustomData, getData, getCustomData} from './../../store';
@@ -39,6 +39,18 @@ const shopsScreen = ({navigation}) => {
     return () => subscriber();
   }, []);
 
+
+  const navigateToEditRequest= async (item) => {
+    const user = await getData(); 
+    if (item.uid == user.uid) {
+      setCustomData('request' , item)
+      navigation.navigate('editRequest');
+    }else{
+      alert('You should be the admin to edit this request details '); 
+    }   
+ 
+  };
+
   const navigateToAddNewRequest = (user) => {
     // const groupData = {}
     // setCustomData('groupData')
@@ -67,16 +79,17 @@ const shopsScreen = ({navigation}) => {
           data={requests}
           renderItem={({item}) => {
             return (
-              <ShopCard
-                name={item.name}
-                location={item.location}
-                admin={item.admin}
-                photo={item.image}
-                onLongPress={() => {
-                  navigateToEditShop(item);
-                }}
-                onPress={()=>{alert('Show')}}
-              />
+              
+              <RequestCard
+              name={item.name}
+              group={item.group}
+              shop={item.admin}
+              photo={item.image}
+              onPress={() => {
+                navigateToEditRequest(item);
+              }}
+             // onPress={()=>{alert('Show')}}
+            />
             );
           }}
         />

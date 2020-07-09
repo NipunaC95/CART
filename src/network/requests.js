@@ -13,12 +13,10 @@ const addRequest = (request) => {
 
 const getRequests = async () => {
   var RequestList = [];
-  var snapshot = await firestore().collection('Requests').get();
-
+  var snapshot = await firestore().collection('Requests').get(); 
   snapshot.forEach((doc) => {
     RequestList.push(doc.data());
-  });
-
+  }); 
   return RequestList;
 };
 
@@ -37,7 +35,7 @@ const deleteRequest = async (key) => {
     .doc(key)
     .delete()
     .then(() => {
-      console.log('User deleted!');
+      console.log('Request deleted!');
     });
 };
 

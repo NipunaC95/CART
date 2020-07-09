@@ -37,8 +37,9 @@ const shopsScreen = ({navigation}) => {
     return () => subscriber();
   }, []);
 
-  const navigateToAddShop = (user) => {
-    navigation.navigate('addShop', user);
+  const navigateToCheckout = (shop) => {
+    setCustomData('shopData',shop)
+    navigation.navigate('checkout');
   };
 
   const navigateToEditShop = async (item) => {
@@ -73,7 +74,7 @@ const shopsScreen = ({navigation}) => {
                 onLongPress={() => {
                   navigateToEditShop(item);
                 }}
-                onPress={()=>{alert('Show')}}
+                onPress={()=>{ navigateToCheckout(item);}}
               />
             );
           }}

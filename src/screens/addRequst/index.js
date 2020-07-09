@@ -1,24 +1,28 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {TextInput, ScrollView} from 'react-native-gesture-handler';
-import { getShops} from '../../network/shops';
-import {getData} from './../../store';
+import {getShops  } from '../../network/shops';
+import { addRequest } from '../../network/requests';
+import {getData, getCustomData} from './../../store';
 import {withNavigation} from 'react-navigation';
 import {Picker} from '@react-native-community/picker';
-
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      shops:[],
-      name: '', 
-      shop:{},
+      shops: [],
+      name: '',
+      selectedShop:{},
+      shop: '',
+      shopId: '',
       type: '',
       price: 0,
       specialNotes: '',
       user: '',
       uid: '',
+      groupName:'',
+      groupID:''
     };
   }
   setStateValue(key, value) {
@@ -29,40 +33,46 @@ class index extends Component {
     });
   }
 
-  async componentDidMount() {
-    //get shop name list 
-    const shops = await getShops()
-    var shopDetailArray = [] 
-    for (a in shops) {
-        shopDetailArray.push(shops[a]);
-    }
-    this.setStateValue('shops' , shopDetailArray)
+  setShop(shop) {
+    const {id, name} = shop;
+    const state = this.state;
+    this.setState({
+      ...state,
+      shopId: id,
+      shop: name,
+      selectedShop:shop
+    });
+  }
 
+  async componentDidMount() {
+    //get shop name list
+    const shops = await getShops();
+    var shopDetailArray = [];
+    for (a in shops) {
+      shopDetailArray.push(shops[a]);
+    }
+    const groupData = await getCustomData('groupInfo' ); 
+     
     const user = await getData();
-    this.setState({user: user.name, uid: user.uid});
+    this.setState({user: user.name, uid: user.uid ,groupName:groupData.name, shops:shopDetailArray, groupID:groupData.id , shop:shopDetailArray[0] });
   }
 
   submitShop = () => {
-    const shop = {
-      name: this.state.shopName,
-      location: this.state.location,
-      admin: this.state.user.name,
-      uid: this.state.user.uid,
-    };
-
-    console.log(JSON.stringify(shop), null, 2);
-    addShop(shop);
-    this.props.navigation.navigate('shops');
+    console.log(JSON.stringify(this.state, null, 2)); 
+    const {name , shop ,shopId ,type ,price ,specialNotes ,user ,uid  ,groupName , groupID  } = this.state  
+    const request = {name , shop ,shopId ,type ,price ,specialNotes ,user ,uid   ,groupName , groupID   }; 
+    
+    //console.log(request);
+    addRequest(request);
+    this.props.navigation.navigate('secondryNavigator', { screen: 'shops'}) 
   };
 
-  render() {
  
-    let shopPicks = this.state.shops.map((shop,myIndex)=>{
-        return(
-        <Picker.Item label={shop.name} value={shop} key={myIndex}/>
-        )
-        });
 
+  render() {
+    let shopPicks = this.state.shops.map((shop, myIndex) => {
+      return <Picker.Item label={shop.name} value={shop} key={myIndex} />;
+    });
 
     return (
       <ScrollView>
@@ -70,16 +80,17 @@ class index extends Component {
           <View style={styles.card}>
             <Text style={styles.inputTitles}>Name </Text>
             <TextInput
+              placeholder="Enter item name here "
               style={styles.textInput}
               onChangeText={(e) => {
-                this.setStateValue(name, e);
+                this.setStateValue('name', e);
               }}></TextInput>
 
             <Text style={styles.inputTitles}>Type </Text>
             <TextInput
               style={styles.textInput}
               onChangeText={(e) => {
-                this.setStateValue(type, e);
+                this.setStateValue('type', e);
               }}></TextInput>
 
             <Text style={styles.inputTitles}>Price (Rs.) </Text>
@@ -87,22 +98,25 @@ class index extends Component {
               keyboardType={'numeric'}
               style={styles.textInput}
               onChangeText={(e) => {
-                this.setStateValue(price, e);
+                this.setStateValue('price', e);
               }}></TextInput>
 
             <Text style={styles.inputTitles}>Special notes </Text>
             <TextInput
               style={styles.textInput}
               onChangeText={(e) => {
-                this.setStateValue(specialNotes, e);
+                this.setStateValue('specialNotes', e);
               }}></TextInput>
 
+ 
             <Picker
-            //   selectedValue={this.state.shopName}
-            //   onValueChange={props.handleChange('plantType')}
-               >
-                   {shopPicks } 
-            </Picker>
+              selectedValue={this.state.selectedShop} 
+              selectedValue={(this.state && this.state.selectedShop) || this.state.shops[0]}
+              onValueChange={(e) => {
+                this.setShop(e);
+              }}>
+              {shopPicks}
+            </Picker> 
 
             <View style={styles.submitContainer}>
               <Button

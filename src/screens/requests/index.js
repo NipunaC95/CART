@@ -9,40 +9,41 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ShopCard from './../../components/shopCard';
+import RequestCard from './../../components/requestCard';
 import {withNavigation} from 'react-navigation';
 
-import {setCustomData, getData, getCustomData} from './../../store';
-import request from 'superagent';
+import {setCustomData, getData} from './../../store';
 
 const shopsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
-  const [requests, setRequests] = useState([]); // Initial empty array of shops
+  const [request, setshops] = useState([]); // Initial empty array of request
 
-  useEffect(() => {
+  useEffect(async() => {
+
+    const user = await getData();
+
     const subscriber = firestore()
       .collection('Requests')
-      .onSnapshot(async(querySnapshot) => {
-        const requests = [];
-        const groupInfo = await getCustomData('groupInfo') 
+      .onSnapshot((querySnapshot) => {
+        const request = [];
+
         querySnapshot.forEach((documentSnapshot) => {
-          if(groupInfo.id==documentSnapshot.data().groupID){
-            requests.push({
-              ...documentSnapshot.data(),
-              key: documentSnapshot.id,
-            });
-          } 
+            const data = documentSnapshot.data()
+            if(data.uid==user.uid){
+                request.push({
+                    ...data,
+                    key: documentSnapshot.id,
+                });
+            }  
         }); 
-        setRequests(requests);
+        setshops(request);
         setLoading(false);
       });
     return () => subscriber();
   }, []);
 
-  const navigateToAddNewRequest = (user) => {
-    // const groupData = {}
-    // setCustomData('groupData')
-    navigation.navigate('addRequest', user);
+  const navigateToAddShop = (user) => {
+    navigation.navigate('addShop', user);
   };
 
   const navigateToEditShop = async (item) => {
@@ -51,8 +52,9 @@ const shopsScreen = ({navigation}) => {
       setCustomData('shop' , item)
       navigation.navigate('editShop');
     }else{
-      alert('You should be the admin to edit this shops details '); 
+      alert('You should be the admin to edit this request details '); 
     }   
+ 
   };
 
   if (loading) {
@@ -64,13 +66,13 @@ const shopsScreen = ({navigation}) => {
       <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={requests}
+          data={request}
           renderItem={({item}) => {
             return (
-              <ShopCard
+              <RequestCard
                 name={item.name}
-                location={item.location}
-                admin={item.admin}
+                group={item.group}
+                shop={item.admin}
                 photo={item.image}
                 onLongPress={() => {
                   navigateToEditShop(item);
@@ -84,7 +86,7 @@ const shopsScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.plusWrapper}
             onPress={() => {
-              navigateToAddNewRequest();
+              navigateToAddShop();
             }}>
             <Text style={styles.plusText}>+</Text>
           </TouchableOpacity>

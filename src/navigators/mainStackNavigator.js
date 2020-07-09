@@ -22,8 +22,8 @@ const mainStackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-         initialRouteName="addRequest"
-         //initialRouteName="secondryNavigator"
+        // initialRouteName="addRequest"
+         initialRouteName="secondryNavigator"
         //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"

@@ -9,9 +9,11 @@ import {
   LoginScreen,
   ProfileScreen,
   AddGroupMembersScreen,
-  CreateGroupScreen , 
-  ViewGroupScreen , 
-  AddRequestsScreen
+  CreateGroupScreen,
+  ViewGroupScreen,
+  AddRequestsScreen,
+  EditRequestScreen,
+  CheckoutScreen,
 } from './../screens';
 import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
@@ -23,7 +25,7 @@ const mainStackNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         // initialRouteName="addRequest"
-         initialRouteName="secondryNavigator"
+        initialRouteName="secondryNavigator"
         //initialRouteName="addshop"
         //initialRouteName="signup"
         //initialRouteName="login"
@@ -105,13 +107,23 @@ const mainStackNavigator = () => {
           options={{title: 'View group requests', headerShown: true}}
         />
 
-
-<Stack.Screen
+        <Stack.Screen
           name="addRequest"
           component={AddRequestsScreen}
           options={{title: 'Create a request', headerShown: true}}
         />
-  
+
+        <Stack.Screen
+          name="editRequest"
+          component={ EditRequestScreen}
+          options={{title: 'Edit my request', headerShown: true}}
+        />
+
+        <Stack.Screen
+          name="checkout"
+          component={CheckoutScreen}
+          options={{title: 'Checkout', headerShown: true}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

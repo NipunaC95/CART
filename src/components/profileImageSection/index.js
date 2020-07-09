@@ -14,7 +14,7 @@ class index extends Component {
     this.state = {
       image: '',
       uid: '',
-      uri: '',
+      uri: 'https://i.pravatar.cc/150?u=fake@pravatar.com',
     };
   }
 

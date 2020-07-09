@@ -41,10 +41,7 @@ const shopsScreen = ({navigation}) => {
       });
     return () => subscriber();
   }, []);
-
-  const navigateToAddShop = (user) => {
-    navigation.navigate('addShop', user);
-  };
+ 
 
   const navigateToEditShop = async (item) => {
     const user = await getData(); 
@@ -82,15 +79,7 @@ const shopsScreen = ({navigation}) => {
             );
           }}
         />
-        <View style={styles.plus}>
-          <TouchableOpacity
-            style={styles.plusWrapper}
-            onPress={() => {
-              navigateToAddShop();
-            }}>
-            <Text style={styles.plusText}>+</Text>
-          </TouchableOpacity>
-        </View>
+ 
       </View>
     </View>
   );
@@ -101,42 +90,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: 10,
-  },
-
-  plusWrapper: {
-    width: 35,
-    height: 35,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
+  }, 
   container: {
     height: '100%',
     paddingHorizontal: '5%',
     zIndex: 0,
     elevation: 1,
   },
+ 
 
-  plus: {
-    elevation: 3,
-    position: 'absolute',
-    right: '10%',
-    bottom: '5%',
-    backgroundColor: '#0F4021',
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 3,
-  },
-
-  plusText: {
-    color: 'white',
-    fontSize: 25,
-  },
+ 
 });
 
 export default withNavigation(shopsScreen);

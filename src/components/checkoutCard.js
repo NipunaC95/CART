@@ -27,6 +27,7 @@ const ShopCard = ({name, photo, uid , item, toggleItem }) => {
         width={30}
         height={30}
       />
+      
     </TouchableWithoutFeedback>
   );
 };

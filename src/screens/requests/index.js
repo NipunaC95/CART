@@ -71,10 +71,14 @@ const shopsScreen = ({navigation}) => {
                 group={item.group}
                 shop={item.admin}
                 photo={item.image}
+                state={item.status}
                 onPress={() => {
+                  if(item.status=='collected'){
+                   alert(`This item is already collected by ${item.collectorName}`) 
+                  }else{ 
                   navigateToEditRequest(item);
-                }}
-               // onPress={()=>{alert('Show')}}
+                  }
+                }} 
               />
             );
           }}

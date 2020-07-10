@@ -26,7 +26,11 @@ const shopsScreen = ({navigation}) => {
         const requests = [];
         const groupInfo = await getCustomData('groupInfo') 
         querySnapshot.forEach((documentSnapshot) => {
-          if(groupInfo.id==documentSnapshot.data().groupID){
+
+          const data = documentSnapshot.data()
+       
+
+          if((groupInfo.id==data.groupID)&&(data.status!='collected')){
             requests.push({
               ...documentSnapshot.data(),
               key: documentSnapshot.id,

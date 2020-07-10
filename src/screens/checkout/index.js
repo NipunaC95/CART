@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import Checkout from '../../components/checkoutCard';
-import {setCustomData, getData, getCustomData} from '../../store'; 
+import {setCustomData, getData, getCustomData} from '../../store';
+import {collectRequests} from '../../network/requests';
 
 const index = ({navigation}) => {
   const [requests, setRequests] = useState([]);
@@ -23,11 +24,15 @@ const index = ({navigation}) => {
       .onSnapshot(async (querySnapshot) => {
         const requests = [];
         const shopData = await getCustomData('shopData');
-        console.log(JSON.stringify(shopData,null,2))
+        console.log(JSON.stringify(shopData, null, 2));
 
         querySnapshot.forEach((documentSnapshot) => {
-          if (documentSnapshot.data().shopId == shopData.id) {
-            console.log(documentSnapshot.data().shopId , shopData.id)
+          if (
+            documentSnapshot.data().shopId == shopData.id &&
+            documentSnapshot.data().status != 'collected'
+          ) {
+            console.log(documentSnapshot.data().status );
+
             requests.push({
               ...documentSnapshot.data(),
               key: documentSnapshot.id,
@@ -36,8 +41,8 @@ const index = ({navigation}) => {
           }
         });
 
-        const me = await getData();  
-        setCurrentUser(me)
+        const me = await getData();
+        setCurrentUser(me);
         setRequests(requests);
       });
     return () => subscriber();
@@ -45,20 +50,27 @@ const index = ({navigation}) => {
 
   const toggleItem = (item, state) => {
     console.log(item.name);
+    var key = item.key;
     if (state == false) {
-      setSelected({...selected, [item.uid]: item});
-    } else { 
+      setSelected({...selected, [key]: item});
+    } else {
       var selectedObject = selected;
-      delete selectedObject[uidUser];
+      delete selectedObject[key];
       setSelected({...selectedObject});
     }
+    console.log(JSON.stringify(selected, null, 2));
   };
 
-  const setFinished = () => { 
-     //set requests as marked 
- console.log(JSON.stringify(selected , null , 2))
-
-    //navigation.navigate('createGroup');
+  const setFinished = () => {
+    /**
+     * get All objects set their state as collected
+     * set Price if needed
+     * add collected by name and uid
+     * in the request screen after collected editions / deltions are prohibited
+     * Then set recieved box which will delete the request
+     */
+    collectRequests(selected, currentUser.name, currentUser.uid);
+    // console.log(JSON.stringify(selected , null , 2))
   };
 
   return (
@@ -81,7 +93,12 @@ const index = ({navigation}) => {
         }}
       />
 
-      <Button title={"Finish"}  onPress={()=>{setFinished()}}/>
+      <Button
+        title={'Finish'}
+        onPress={() => {
+          setFinished();
+        }}
+      />
     </View>
   );
 };

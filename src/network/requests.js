@@ -29,6 +29,30 @@ const updateRequest = async (request) => {
     .catch((error) => console.log(error));
 };
 
+
+// const collectRequests = async (id , collectorName , collectorUID) => {
+//   firestore()
+//     .collection('Requests')
+//     .doc(id)
+//     .update({ collectorName , collectorUID , date :new Date() , status : 'Collected'}) 
+//     .catch((error) => console.log(error));
+// };
+
+
+const collectRequests = async (requests, collectorName , collectorUID) => {
+  
+  for (const request in requests) { 
+    console.log(requests[request].key)  
+    firestore()
+    .collection('Requests')
+    .doc(requests[request].key)
+    .update({ collectorName , collectorUID , date :new Date() , status : 'collected'}) 
+    .catch((error) => console.log(error));
+  } 
+};
+
+
+
 const deleteRequest = async (key) => {
   firestore()
     .collection('Requests')
@@ -39,4 +63,4 @@ const deleteRequest = async (key) => {
     });
 };
 
-export {addRequest, getRequests, updateRequest, deleteRequest};
+export {addRequest, getRequests, updateRequest, collectRequests, deleteRequest};

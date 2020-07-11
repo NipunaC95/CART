@@ -19,7 +19,7 @@ export default StyleSheet.create({
 
   profileInfo: {
     alignItems: 'baseline',
-    width: '90%', 
+    width: '90%',
   },
 
   profileInfoRow: {
@@ -32,15 +32,15 @@ export default StyleSheet.create({
   },
 
   profileInfoColumn2: {
-    padding: 10,
+    padding:8,
     paddingTop: 0,
   },
   infoTitleText: {
-    fontSize: 16,
+    fontSize: 20,
     position: 'relative',
   },
   infoSubTitleText: {
-    fontSize: 15,
+    fontSize: 17,
     position: 'relative',
   },
 
@@ -51,18 +51,15 @@ export default StyleSheet.create({
 
   miniIcons2: {
     fontSize: 27,
-    position:'absolute',
-    backgroundColor:'red',
-    left:100,
-    top:200
   },
 
   profileInfoColumn3: {
     alignItems: 'center',
     alignContent: 'center',
     padding: 10,
-    position: 'relative',
-    left: '190%',
+    position: 'absolute',
+    top:'-10%',
+    left: '70%',
   },
   ModalBackgraound: {
     backgroundColor: '#000000aa',

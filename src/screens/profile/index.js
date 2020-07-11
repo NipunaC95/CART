@@ -44,10 +44,14 @@ export class ProfileScreen extends Component {
   };
 
   handleOnChangeName(text){ 
-    updateName(this.state.user.uid, text)
-    const oldUser = this.state.user
-    const newUser = {...oldUser,name:text} 
-    this.setState({...this.state,user:newUser,showModal: false}) 
+    if(text.lenght < 6){
+      alert('Name should be more than 5 characters long')
+    }else{ 
+      updateName(this.state.user.uid, text)
+      const oldUser = this.state.user
+      const newUser = {...oldUser,name:text} 
+      this.setState({...this.state,user:newUser,showModal: false}) 
+    }
   
   }
   
@@ -93,7 +97,7 @@ export class ProfileScreen extends Component {
 
               <View style={styles.profileInfoColumn3}>
                 <TouchableWithoutFeedback onPress={() =>this.showNameChangeModal() }>
-                  <Icon name="pencil" style={ styles.miniIcons2  } />
+                  <Icon name="pencil" style={{...styles.miniIcons2  }} />
                 </TouchableWithoutFeedback>
               </View>
 

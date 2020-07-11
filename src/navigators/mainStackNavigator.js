@@ -74,7 +74,7 @@ const mainStackNavigator = () => {
           component={EditShop}
           options={{
             headerShown: true,
-            title: 'Edit/ Delete a shop',
+            title: 'Edit / Delete a shop',
             headerTitleAlign: 'left',
           }}
         />
@@ -116,7 +116,7 @@ const mainStackNavigator = () => {
         <Stack.Screen
           name="editRequest"
           component={ EditRequestScreen}
-          options={{title: 'Edit my request', headerShown: true}}
+          options={{title: 'Edit / Delete a request', headerShown: true}}
         />
 
         <Stack.Screen

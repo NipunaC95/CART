@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, StyleSheet, Button, Alert} from 'react-native';
+import {View, Text, TextInput, StyleSheet, Alert} from 'react-native';
 import {setCustomData, getCustomData} from './../../store';
-import {updateShop, deleteShop} from '../../network/shops';
-import {updateRequest , deleteRequest} from '../../network/requests';
+import {updateRequest, deleteRequest} from '../../network/requests';
+import {GreenButton ,RedButton} from '../../components/buttons/customButton';
+
 class index extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +21,16 @@ class index extends Component {
   }
 
   pressOnUpdate(request) {
-    updateRequest(request);
-    this.props.navigation.navigate('requests');
+    if (this.state.name == '') {
+      alert('Name should not be empty');
+    } else if (this.state.type == '') {
+      alert('Type should not be empty');
+    } else if (this.state.price == 0) {
+      alert('stimated price should not be zero');
+    } else {
+      updateRequest(request);
+      this.props.navigation.navigate('requests');
+    }
   }
 
   updateStateData(key, value) {
@@ -43,7 +52,9 @@ class index extends Component {
           text: 'Yes',
           onPress: () => {
             deleteRequest(request);
-            this.props.navigation.navigate('secondryNavigator', { screen: 'reqests' });
+            this.props.navigation.navigate('secondryNavigator', {
+              screen: 'reqests',
+            });
           },
         },
       ],
@@ -69,7 +80,7 @@ class index extends Component {
           <TextInput
             placeholder={'Type of the item'}
             onChangeText={(type) => {
-              this.updateStateData( 'type',type);
+              this.updateStateData('type', type);
             }}
             value={this.state.type}
             style={styles.textInput}
@@ -79,21 +90,21 @@ class index extends Component {
           <TextInput
             placeholder={'Price of the item'}
             onChangeText={(price) => {
-              this.updateStateData( 'price',price);
+              this.updateStateData('price', price);
             }}
             value={this.state.price}
             style={styles.textInput}
           />
-
-          <Button
-            title={'Update'}
-            onPress={() => this.pressOnUpdate(this.state)}
-          />
-          <Text>{''}</Text>
-          <Button
-            title={'Delete'}
-            onPress={() => this.deleteRequest(this.state.key)}
-          />
+          <View style={styles.buttonContainer}>
+            <GreenButton
+              title={'Update'}
+              onPress={() => this.pressOnUpdate(this.state)}
+            />
+            <RedButton
+              title={'Delete'}
+              onPress={() => this.deleteRequest(this.state.key)}
+            />
+          </View>
         </View>
       </View>
     );
@@ -147,12 +158,7 @@ const styles = StyleSheet.create({
     marginLeft: 65,
     marginTop: 10,
   },
-
-  centerButton: {
-    marginTop: 100,
-    // alignContent:'center',
-    alignItems: 'center',
-  },
+ 
 });
 
 export default index;

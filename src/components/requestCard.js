@@ -1,32 +1,86 @@
 import React from 'react';
-import {Text, StyleSheet, Image} from 'react-native';
+import {Text, StyleSheet, Alert} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const RequestCard = ({name, group, shop, photo, onPress, onLongPress , navigation}) => {
 
-  //console.log({name, group, shop})
+
+import moment from 'moment';
+import { deleteRequest } from '../network/requests';
+
+const RequestCard = ({item, onPress, onLongPress}) => {
+  const createTwoButtonAlert = (id) => {
+    Alert.alert(
+      'Deleting fullfilled reqest',
+      'Do you want to delete this request ?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () =>  {
+          deleteRequest(id)
+        }},
+      ],
+      {cancelable: false},
+    );
+  };
+
+  const longPress = () => {
+    if (item.status == 'collected') {
+      Alert.alert(
+        'Do you want to delete this request ?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
+    }
+  };
+
   return (
     <TouchableWithoutFeedback
-   // onPress={onPress}
       onPress={onPress}
-      onLongPress={onLongPress}
-      style={styles.card}>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.subTitle}>Group askded from  {group}</Text>
-      <Text style={styles.details}>Shop  {shop}</Text>
-      {/* <Image source={{uri: photo}} style={styles.image} /> */}
+      onLongPress={() => createTwoButtonAlert(item.key)}
+      style={item.status ? styles.cardRemaining : styles.cardCollected}>
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.subTitle}>Askded from {item.groupName}</Text>
+      <Text style={styles.details}>Assigned shop was {item.shop}</Text>
+      <Text style={styles.details}>Assued Price was Rs.{item.price}</Text>
+      <Text style={styles.details}>
+        {item.status
+          ? `This item is collected by ${item.collectorName}`
+          : 'This item is not collected untill now'}
+      </Text>
+      <Text style={styles.details}>Asked {moment(item.date).fromNow()} </Text>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
+  cardCollected:{
     elevation: 6,
-    padding: '7%',
-    marginTop: '10%',
-    height: 140,
+    padding: '5%',
+    marginTop: '5%',
+    marginBottom: '5%',
+    height: 180,
     borderRadius: 10,
     backgroundColor: '#28AC5B',
+    elevation: 5,
+  },
+  cardRemaining:  {
+    elevation: 6,
+    padding: '5%',
+    marginTop: '5%',
+    marginBottom: '5%',
+    height: 180,
+    borderRadius: 10,
+    backgroundColor: '#307AFF',
     elevation: 5,
   },
 
@@ -36,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   subTitle: {
-    fontSize: 20,
+    fontSize: 18,
     color: 'white',
   },
 

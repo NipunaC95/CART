@@ -85,10 +85,8 @@ const shopsScreen = ({navigation}) => {
             return (
               
               <RequestCard
-              name={item.name}
-              group={item.group}
-              shop={item.admin}
-              photo={item.image}
+              name={item.name} 
+              item={item}
               onPress={() => {
                 navigateToEditRequest(item);
               }}

@@ -8,6 +8,7 @@ import styles from "./styles";
 import { updateName } from "./../../network/userProfile"; 
 import { withNavigation } from 'react-navigation';
 import { logOut , deleteUser } from "./../../network/users";
+import {GreenButton ,RedButton , GreenButtonNoShadow} from '../../components/buttons/customButton';
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export class ProfileScreen extends Component {
       user: {
         email: '',
         name: '',
+        newName:''
       },
       showModal: false,
     };
@@ -72,6 +74,7 @@ export class ProfileScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+      
         <ProfileImageSection showModal={this.state.showModal}/> 
         <View style={styles.profileInfoContainer}>
           <View style={styles.profileInfo}>
@@ -81,6 +84,8 @@ export class ProfileScreen extends Component {
               </View> 
               <View style={styles.profileInfoColumn2}>
                 <Text style={styles.infoTitleText}>Name  </Text>
+
+                
                 <Text style={styles.infoSubTitleText}>
                   {this.state.user.name}
                 </Text>
@@ -88,7 +93,7 @@ export class ProfileScreen extends Component {
 
               <View style={styles.profileInfoColumn3}>
                 <TouchableWithoutFeedback onPress={() =>this.showNameChangeModal() }>
-                  <Icon name="pencil" style={styles.miniIcons2} />
+                  <Icon name="pencil" style={ styles.miniIcons2  } />
                 </TouchableWithoutFeedback>
               </View>
 
@@ -126,8 +131,8 @@ export class ProfileScreen extends Component {
                 />
 
                 <View style={styles.buttons}>
-                  <Button
-                    title="Hide"
+                  <GreenButtonNoShadow
+                    title="Set"
                     onPress={() => {
                       this.handleOnChangeName(this.state.text);
                     }}
@@ -140,13 +145,13 @@ export class ProfileScreen extends Component {
       </Modal>
 
 
-        <Button
+        <GreenButton
           title="Logout"
           onPress={() => {
             this.handleLogOut()
           }}
         />
-        <Button
+        <RedButton
           title="Delete acount"
           onPress={() => {
             this.handleDelete();

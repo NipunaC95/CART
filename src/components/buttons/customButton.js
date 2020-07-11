@@ -18,6 +18,22 @@ export  function GreenButton({title, onPress}) {
   );
 }
 
+
+export  function GreenButtonNoShadow({title, onPress}) {
+  return (
+    <TouchableOpacity style={styles.touch} onPress={onPress}> 
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={['#2CBE64', '#33C974', '#2CBE64']}
+        style={styles.button}>
+        <Text style={styles.buttonText}> {title}</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+  );
+}
+
+
 export  function RedButton({title, onPress}) {
   return (
     <TouchableOpacity style={styles.touch} onPress={onPress}>

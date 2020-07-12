@@ -33,6 +33,7 @@ const updateShop = async (shop) => {
     .update({
       name: shop.name,
       location: shop.location,
+      type:shop.type
     })
     .then((snapshot) => snapshot.get())
     .catch((error) => console.log(error));

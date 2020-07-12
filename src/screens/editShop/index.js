@@ -1,23 +1,49 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput, StyleSheet, Button , Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Button,
+  KeyboardAvoidingView,
+  Alert,
+} from 'react-native';
 import {setCustomData, getCustomData} from './../../store';
-import { updateShop , deleteShop } from "../../network/shops";
+import {updateShop, deleteShop} from '../../network/shops';
+import {GreenButton, RedButton} from '../../components/buttons/customButton';
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      shopName: '',
+      location: '',
       name: '',
+      type:''
     };
   }
-
+  setData(key, value) {
+    const state = this.state;
+    this.setState({
+      ...state,
+      [key]: value,
+    });
+  }
   async componentDidMount() {
-    const data = await getCustomData('shop'); 
+    const data = await getCustomData('shop');
     this.setState({...data});
   }
 
   updateShop(shop) {
-    updateShop(shop);
-    this.props.navigation.navigate('shops')
+    if (this.state.name.length < 3) {
+      alert('Shop name should contain more than 2 characters');
+    } else if (this.state.location.length < 6) {
+      alert('Location of the shop should contain more than 5 characters');
+    } else if (this.state.type.length < 6) {
+      alert('Shop name should contain more than 5 characters');
+    } else {
+      updateShop(shop);
+      this.props.navigation.navigate('shops');
+    }
   }
 
   deleteShop(shop) {
@@ -30,10 +56,13 @@ class index extends Component {
           onPress: () => console.log('No Pressed'),
           style: 'cancel',
         },
-        {text: 'Yes', onPress: () => {
-          deleteShop(shop);
-          this.props.navigation.navigate('shops')
-        }},
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteShop(shop);
+            this.props.navigation.navigate('shops');
+          },
+        },
       ],
       {cancelable: false},
     );
@@ -42,33 +71,47 @@ class index extends Component {
   render() {
     console.log(JSON.stringify(this.state));
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.inputTitles}>Shop name</Text>
+          <Text style={styles.inputTitles}>Name </Text>
           <TextInput
-            placeholder={'Name'}
-            onChangeText={(name) => {
-              this.setState({...this.state, name});
-            }}
+            placeholder={'Name of the shop'}
+            style={styles.textInput}
             value={this.state.name}
-            style={styles.textInput}
-          />
-          <Text style={styles.inputTitles}>Location of the shop</Text>
+            onChangeText={(e) => {
+              this.setData('name', e);
+            }}></TextInput>
+
+          <Text style={styles.inputTitles}>Location </Text>
           <TextInput
-            placeholder={'Location'}
-            onChangeText={(location) => {
-              this.setState({...this.state, location});
-            }}
-            value={this.state.location}
+            placeholder={'Location of the shop'}
             style={styles.textInput}
+            value={this.state.location}
+            onChangeText={(e) => {
+              this.setData('location', e);
+            }}></TextInput>
+
+          <Text style={styles.inputTitles}>Type </Text>
+          <TextInput
+            placeholder={'Type of the shop'}
+            style={styles.textInput}
+            value={this.state.type}
+            onChangeText={(e) => {
+              this.setData('type', e);
+            }}></TextInput>
+
+          <GreenButton
+            title={'Update'}
+            onPress={() => this.updateShop(this.state)}
           />
-
-
-          <Button title={'Update'} onPress={() => this.updateShop(this.state)} />
-          <Text>{''}</Text>
-          <Button title={'Delete'} onPress={() => this.deleteShop(this.state.key)} />
+          <RedButton
+            title={'Delete'}
+            onPress={() => this.deleteShop(this.state.key)}
+          />
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -87,7 +130,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 1},
     marginLeft: '5%',
     top: 40,
-    height: '90%',
+    height: '85%',
     width: '90%',
     position: 'relative',
     //  zIndex: -1,

@@ -15,30 +15,14 @@ import {GreenButton} from '../../components/buttons/customButton';
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      image: '',
+    this.state = { 
       shopName: '',
       location: '',
       name: '',
       type:''
     };
   }
-  setShopName(shopName) {
-    const state = this.state;
-    this.setState({
-      ...state,
-      shopName,
-    });
-  }
-
-  setLocation(location) {
-    const state = this.state;
-    this.setState({
-      ...state,
-      location,
-    });
-  }
-
+ 
   setData(key, value) {
     const state = this.state;
     this.setState({

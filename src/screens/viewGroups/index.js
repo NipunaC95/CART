@@ -78,7 +78,10 @@ const shopsScreen = ({navigation}) => {
   return (
     <View>
       <View style={styles.container}>
-        <FlatList
+
+
+       {(requests.length>0)?(   
+       <FlatList
           showsVerticalScrollIndicator={false}
           data={requests}
           renderItem={({item}) => {
@@ -94,7 +97,13 @@ const shopsScreen = ({navigation}) => {
             />
             );
           }}
-        />
+        />):(
+          <View style={styles.noReq}>
+            <Text style={styles.noReqText}>There are no group reqests to show</Text>
+          </View>
+        )}
+
+    
         <View style={styles.plus}>
           <TouchableOpacity
             style={styles.plusWrapper}
@@ -110,6 +119,20 @@ const shopsScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+
+  noReq:{
+    height:'90%',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  noReqText:{ 
+    fontSize:18
+  },
+
+
+
   plusHolder: {
     position: 'absolute',
     left: 10,

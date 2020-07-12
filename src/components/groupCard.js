@@ -2,15 +2,15 @@ import React from 'react';
 import {Text, StyleSheet, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const GroupCard = ({name, location, admin, photo, onPress, onLongPress}) => {
+const GroupCard = ({  item, onPress, onLongPress}) => {
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.card}>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.subTitle}>{location} members</Text>
-      <Text style={styles.details}>Added by {admin}</Text> 
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.subTitle}>{item.users.length} members</Text>
+      <Text style={styles.details}>Created by {item.admin.name}</Text> 
     </TouchableWithoutFeedback>
   );
 };
@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
   card: {
     elevation: 6,
     padding: '7%',
-    marginTop: '10%',
+    marginTop: '5%',
+    marginBottom: '5%',
     height: 140,
     borderRadius: 10,
     backgroundColor: '#28AC5B',

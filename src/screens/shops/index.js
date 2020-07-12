@@ -42,6 +42,12 @@ const shopsScreen = ({navigation}) => {
     navigation.navigate('checkout');
   };
 
+
+  const navigateToAddShop = () => { 
+    navigation.navigate('addShop');
+  };
+
+
   const navigateToEditShop = async (item) => {
     const user = await getData(); 
     if (item.adminUID == user.uid) {

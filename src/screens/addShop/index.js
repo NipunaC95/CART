@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Button,
+} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {addShop} from '../../network/shops';
 import {getData} from './../../store';
-import { withNavigation } from 'react-navigation';
-
-
+import {withNavigation} from 'react-navigation';
+import {GreenButton} from '../../components/buttons/customButton';
 
 class index extends Component {
   constructor(props) {
@@ -14,7 +19,8 @@ class index extends Component {
       image: '',
       shopName: '',
       location: '',
-      name:''
+      name: '',
+      type:''
     };
   }
   setShopName(shopName) {
@@ -33,11 +39,11 @@ class index extends Component {
     });
   }
 
-  setImage(image) {
+  setData(key, value) {
     const state = this.state;
     this.setState({
       ...state,
-      image,
+      [key]: value,
     });
   }
 
@@ -47,72 +53,116 @@ class index extends Component {
   }
 
   submitShop = () => {
+    if(this.state.shopName.length <3){
+      alert('Shop name should contain more than 2 characters');
+    }else if(this.state.location.length <6){
+      alert('Location of the shop should contain more than 5 characters');
+    }else if(this.state.type.length <6){
+      alert('Shop name should contain more than 5 characters');
+    }
+    else{
+      
     const shop = {
       name: this.state.shopName,
-      location:this.state.location,
+      location: this.state.location,
       admin: this.state.user.name,
       uid: this.state.user.uid,
+      type:this.state.user.type
     };
-    
-    console.log(JSON.stringify(shop),null,2)
+
+    console.log(JSON.stringify(shop), null, 2);
     addShop(shop);
-    this.props.navigation.navigate('shops')
+    this.props.navigation.navigate('shops');
+    }
   };
 
   render() {
-    console.log(JSON.stringify(this.state.user , null ,2))
+    console.log(JSON.stringify(this.state.user, null, 2));
     return (
-      <View style={style.container}>
-        <Text style={style.text}>Name </Text>
-        <TextInput
-          style={style.input}
-          onChangeText={(e) => {
-            this.setShopName(e);
-          }}></TextInput>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={styles.container}>
+        <View style={styles.card}>
+          <Text style={styles.inputTitles}>Name </Text>
+          <TextInput
+            placeholder={'Name of the shop'}
+            style={styles.textInput}
+            onChangeText={(e) => {
+              this.setData('shopName', e);
+            }}></TextInput>
 
-        <Text style={style.text}>Location </Text>
-        <TextInput
-          style={style.input}
-          onChangeText={(e) => {
-            this.setLocation(e);
-          }}></TextInput>
+          <Text style={styles.inputTitles}>Location </Text>
+          <TextInput
+            placeholder={'Location of the shop'}
+            style={styles.textInput}
+            onChangeText={(e) => {
+              this.setData('location', e);
+            }}></TextInput>
 
-        <Text style={style.text}>Image</Text>
-        <Button title={'Selcet image'} />
+          <Text style={styles.inputTitles}>Type </Text>
+          <TextInput
+            placeholder={'Type of the shop'}
+            style={styles.textInput}
+            onChangeText={(e) => {
+              this.setData('type', e);
+            }}></TextInput>
 
-        <View style={style.submitContainer}>
-          <Button
-            title={'Add Shop'}
-            onPress={() => {
-              this.submitShop();
-            }}
-          />
+          <View style={styles.submitContainer}>
+            <GreenButton
+              title={'Add Shop'}
+              onPress={() => {
+                this.submitShop();
+              }}
+            />
+          </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    padding: '5%',
-    zIndex: 0,
+    fontFamily: 'Segoe UI',
+    flex: 1,
+    backgroundColor: '#E4E4E4',
   },
 
-  text: {
-    fontSize: 20,
-    marginVertical: 10,
-  },
-
-  input: {
-    borderColor: 'black',
-    borderWidth: 1,
+  card: {
     borderRadius: 6,
+    backgroundColor: 'white',
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 1, height: 1},
+    marginLeft: '5%',
+    top: 40,
+    height: '75%',
+    width: '90%',
+    position: 'relative',
+  },
+  inputTitles: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 18,
+    marginTop: 30,
+  },
+  textInput: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 15,
+    color: '#404040',
+    width: '85%',
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
   },
 
-  submitContainer: {
-    position: 'relative',
-    marginTop: 40,
+  shopPicker: {
+    width: '80%',
+    marginTop: '5%',
+    marginHorizontal: '10%',
+  },
+
+  centerButton: {
+    marginTop: 100,
+    alignItems: 'center',
   },
 });
 export default withNavigation(index);

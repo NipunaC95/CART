@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, Alert} from 'react-native';
+import {Text, StyleSheet, Alert , View} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 
@@ -28,6 +28,7 @@ const RequestCard = ({item, onPress, onLongPress}) => {
       {cancelable: false},
     );
   };
+  
  
   return (
     <TouchableWithoutFeedback
@@ -37,7 +38,8 @@ const RequestCard = ({item, onPress, onLongPress}) => {
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.subTitle}>Askded from {item.groupName}</Text>
       <Text style={styles.details}>Assigned shop was {item.shop}</Text>
-      <Text style={styles.details}>Assued Price was Rs.{item.price}</Text>
+      <Text style={styles.details}>Assumed Price was Rs.{item.price}</Text>
+ 
       <Text style={styles.details}>
         {item.status
           ? `This item is collected by ${item.collectorName}`

@@ -9,8 +9,11 @@ import { deleteRequest } from '../network/requests';
 
 const RequestCard = ({item, onPress, onLongPress}) => {
   const createTwoButtonAlert = (id) => {
+    
+    var type = item.status ? 'fulfilled ' : 'pending'
+
     Alert.alert(
-      'Deleting fullfilled reqest',
+      `Deleting a ${type} reqest`,
       'Do you want to delete this request ?',
       [
         {
@@ -25,24 +28,7 @@ const RequestCard = ({item, onPress, onLongPress}) => {
       {cancelable: false},
     );
   };
-
-  const longPress = () => {
-    if (item.status == 'collected') {
-      Alert.alert(
-        'Do you want to delete this request ?',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        {cancelable: false},
-      );
-    }
-  };
-
+ 
   return (
     <TouchableWithoutFeedback
       onPress={onPress}

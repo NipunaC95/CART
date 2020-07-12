@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import ShopCard from './../../components/shopCard';
+import GroupCard from '../../components/groupCard';
 
 import {setCustomData, getData} from './../../store';
 
@@ -57,10 +57,8 @@ const groupsScreen = ({navigation}) => {
           data={groups}
           renderItem={({item}) => {
             return (
-              <ShopCard
-                name={item.name}
-                location={item.location} 
-                photo={item.image}
+              <GroupCard 
+                item ={item}
                 onPress={() => {
                   navigateToViewGroup(item);
                 }}

@@ -67,10 +67,7 @@ const shopsScreen = ({navigation}) => {
           renderItem={({item}) => {
             return (
               <ShopCard
-                name={item.name}
-                location={item.location}
-                admin={item.admin}
-                photo={item.image}
+                item={item}
                 onLongPress={() => {
                   navigateToEditShop(item);
                 }}

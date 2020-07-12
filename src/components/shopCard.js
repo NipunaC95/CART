@@ -2,20 +2,16 @@ import React from 'react';
 import {Text, StyleSheet, Image , View} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-const ShopCard = ({name, location, admin, photo, onPress, onLongPress}) => {
+const ShopCard = ({item, onPress, onLongPress}) => {
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
       onLongPress={onLongPress}
       style={styles.card}>
-      <Text style={styles.title}>{name}</Text>
-      <Text style={styles.subTitle}>located at {location}</Text>
-      <Text style={styles.details}>Added by {admin}</Text>
-      {photo!='' ? (
-        <Image source={{uri: photo}} style={styles.image} />
-      ) : (
-        <View></View>
-      )}
+      <Text style={styles.title}>{item.name}</Text>
+      <Text style={styles.subTitle}>located at {item.location}</Text>
+      <Text style={styles.details}>Added by {item.admin}</Text>
+    
     </TouchableWithoutFeedback>
   );
 };
@@ -24,7 +20,8 @@ const styles = StyleSheet.create({
   card: {
     elevation: 6,
     padding: '7%',
-    marginTop: '10%',
+    marginTop: '5%',
+    marginBottom: '5%',
     height: 140,
     borderRadius: 10,
     backgroundColor: '#28AC5B',

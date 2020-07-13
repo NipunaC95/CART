@@ -5,20 +5,20 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button,
-  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {logIn, getUser} from '../../network/users';
 import {useNavigation} from '@react-navigation/native';
 import {getData, setData, clearAppData} from './../../store';
 import {getUserDetails} from './../../network/users';
+import {GreenButton, GreenButtonNoPadding} from '../../components/buttons/customButton';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 's@s.com',
-      password: 'Nipuna',
+      email: '',
+      password: '',
       uid: '',
     };
   }
@@ -52,48 +52,60 @@ class index extends Component {
           this.setState({...state, uid: data.user.uid, user: User});
           setData(User);
         })
-        .then(() => { 
-          this.props.navigation.navigate('secondryNavigator', { screen: 'requests' });
+        .then(() => {
+          this.props.navigation.navigate('secondryNavigator', {
+            screen: 'requests',
+          });
         })
         .catch((error) => {
           alert('Error occured ', error);
-          console.error(error);
         });
     }
   }
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>Login</Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+        <View style={styles.card}>
+          <Text style={styles.title}>Login</Text>
 
-        <Text style={styles.subtitle}>email</Text>
-        <TextInput
-          onChangeText={(e) => {
-            this.setEmail(e);
-          }}
-          value={this.state.email}
-          style={styles.input}
-        />
-
-        <Text style={styles.subtitle}>Password</Text>
-        <TextInput
-          onChangeText={(e) => {
-            this.setPassword(e);
-          }}
-          value={this.state.password}
-          style={styles.input}
-        />
-
-        <View style={styles.buttonContainer}>
-          <Button
-            title={'Submit'}
-            onPress={() => {
-              this.submitForm();
+          <Text style={styles.inputTitles}>email</Text>
+          <TextInput
+            onChangeText={(e) => {
+              this.setEmail(e);
             }}
+            value={this.state.email}
+            style={styles.textInput}
           />
+
+          <Text style={styles.inputTitles}>Password</Text>
+          <TextInput
+          secureTextEntry={true}
+            onChangeText={(e) => {
+              this.setPassword(e);
+            }}
+            value={this.state.password}
+            style={styles.textInput}
+          />
+
+          <View style={styles.buttonContainer}>
+            <GreenButtonNoPadding
+              title={'Log in'}
+              onPress={() => {
+                this.submitForm();
+              }}
+            />
+ <GreenButtonNoPadding
+              title={'Sign up'}
+              onPress={() => {
+                this.props.navigation.navigate('signup')
+              }}
+            /> 
+          </View>
         </View>
-      </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -102,27 +114,46 @@ export default index;
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    paddingHorizontal: '5%',
-    zIndex: 0,
-    elevation: 1,
+    fontFamily: 'Segoe UI',
+    flex: 1,
+    backgroundColor: '#E4E4E4',
   },
 
+  card: {
+    borderRadius: 6,
+    backgroundColor: 'white',
+    shadowOpacity: 0.3,
+    shadowOffset: {width: 1, height: 1},
+    marginLeft: '5%',
+    top: 40,
+    height: 500,
+    width: '90%',
+    position: 'relative',
+    //  zIndex: -1,
+  },
   title: {
-    fontSize: 20,
-    marginTop: 20,
-  },
-  subtitle: {
-    marginTop: 20,
-    fontSize: 18,
+    width: '100%',
+    alignItems: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
+    fontFamily: 'Segoe UI',
+    fontSize: 26,
+    marginTop: 30,
   },
 
-  input: {
-    borderColor: 'black',
-    borderRadius: 5,
-    borderWidth: 1,
+  inputTitles: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 18,
+    marginTop: 30,
   },
-  buttonContainer: {
-    marginTop: 20,
+  textInput: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 15,
+    color: '#404040',
+    width: '85%',
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
   },
 });

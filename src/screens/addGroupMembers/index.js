@@ -62,12 +62,12 @@ const index = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputTitles}>Selcet members </Text>
+      <Text style={styles.inputTitles}>Selcet members  !</Text>
 
       <FlatList
         showsVerticalScrollIndicator={false}
         data={users}
-        renderItem={({item}) => {
+        renderItem={({item}) => { 
           return (
             
             <UserCard

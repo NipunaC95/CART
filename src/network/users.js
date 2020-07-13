@@ -15,10 +15,10 @@ const signUp = (email, password, userName, navigation) => {
           name: userName,
           email,  
           uid: data.user.uid,
-          image: '', 
+          image: 'https://firebasestorage.googleapis.com/v0/b/cart-aa736.appspot.com/o/Profileimages%2Fdefault.png?alt=media&token=6161e962-c895-4522-80c6-4de7ef1e6c4e', 
         })
         .then((snapshot) => {
-          navigation.navigate('secondryNavigator');
+          navigation.navigate('login');
         }) 
         .catch((error) => console.log(error));
     })
@@ -45,6 +45,9 @@ const logOut = () => {
     .then(() => console.log('User signed out!'));
 };
 
+
+
+
 const getUserDetails = async (userId)=>{  
   const doc = await firestore().collection('Users').doc(userId).get();  
   return doc.data();  
@@ -52,10 +55,12 @@ const getUserDetails = async (userId)=>{
 
 
 const deleteUser = async (userId)=>{  
-  var user = await firebase.auth().currentUser;
+  var user = await  auth().currentUser;
+  auth().currentUser.delete()
+  console.log(JSON.stringify(user,null,2))
 
   user.delete().then( async function() {
-    const doc = await firestore().collection('Users').doc(userId).delete()  
+      firestore().collection('Users').doc(user.uid).delete()  
   }, function(error) {
     // An error happened.
   }); 

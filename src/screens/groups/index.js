@@ -81,6 +81,9 @@ const groupsScreen = ({navigation}) => {
   return (
     <View>
       <View style={styles.container}>
+
+      {groups.length != 0 ? (
+        
         <FlatList
           showsVerticalScrollIndicator={false}
           data={groups}
@@ -97,7 +100,11 @@ const groupsScreen = ({navigation}) => {
               />
             );
           }}
-        />
+        />):(
+          <View style={styles.noGroups}>
+          <Text style={styles.inputTitles}>You are not a member of any group</Text>
+        </View>
+        )}
         <View style={styles.plus}>
           <TouchableOpacity
             style={styles.plusWrapper}
@@ -152,6 +159,20 @@ const styles = StyleSheet.create({
   plusText: {
     color: 'white',
     fontSize: 25,
+  }, 
+  inputTitles: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 18,
+    marginTop: 30,
+  },
+
+  noGroups: {
+    height: '80%',
+    width: '100%',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

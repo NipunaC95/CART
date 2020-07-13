@@ -6,7 +6,8 @@ class App extends Component {
  
 
   render() {
-    return (   
+    console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed' , 'Failed prop type'];
+    return (    
       <StackNavigator /> 
     );
   }

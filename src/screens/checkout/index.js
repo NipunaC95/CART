@@ -76,11 +76,11 @@ const index = ({navigation}) => {
         <Text style={styles.inputTitles}>Selcet items you collected </Text> 
         <FlatList
           style={styles.flatlist}
-          ListFooterComponent={<View />}
           data={requests}
           renderItem={({item}) => {
             return <Checkout item={item} toggleItem={toggleItem} /> 
           }}
+          ListFooterComponent={<View />}
           ListFooterComponentStyle={{height: 100}}
           showsVerticalScrollIndicator={false}
         />

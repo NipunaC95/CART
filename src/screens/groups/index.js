@@ -17,17 +17,30 @@ const groupsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [groups, setgroups] = useState([]); // Initial empty array of groups
 
-  useEffect(() => {
+  useEffect(async () => {
+    const user = await getData();
     const subscriber = firestore()
       .collection('Groups')
       .onSnapshot((querySnapshot) => {
         const groups = [];
 
         querySnapshot.forEach((documentSnapshot) => {
-          groups.push({
-            ...documentSnapshot.data(),
-            key: documentSnapshot.id,
-          });
+          var isAUser = false;
+          const data = documentSnapshot.data();
+          for (var a in data.users) {
+            console.log((data.users[a].uid + " -- "+ user.uid))
+            if (data.users[a].uid  == user.uid) {
+              isAUser = true;
+              break;
+            }
+          }
+
+          if (isAUser) {
+            groups.push({
+              ...data,
+              key: documentSnapshot.id,
+            });
+          }
         });
 
         setgroups(groups);
@@ -40,9 +53,9 @@ const groupsScreen = ({navigation}) => {
     navigation.navigate('addGroupMembers', user);
   };
 
-  const navigateToViewGroup= async (item) => { 
-      setCustomData('groupInfo', item);
-      navigation.navigate('viewGroup'); 
+  const navigateToViewGroup = async (item) => {
+    setCustomData('groupInfo', item);
+    navigation.navigate('viewGroup');
   };
 
   if (loading) {
@@ -57,8 +70,8 @@ const groupsScreen = ({navigation}) => {
           data={groups}
           renderItem={({item}) => {
             return (
-              <GroupCard 
-                item ={item}
+              <GroupCard
+                item={item}
                 onPress={() => {
                   navigateToViewGroup(item);
                 }}

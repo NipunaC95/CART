@@ -11,6 +11,7 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import UserCard from '../../components/userCard';
 import {   setCustomData, getData} from '../../store'; 
+import GroupMembersCard from '../../components/groupMembersCard'
 
 const index = ({navigation}) => {
   const [users, setUsers] = useState([]);
@@ -78,6 +79,8 @@ const index = ({navigation}) => {
             />
           );
         }}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={{height: 50}}
       />
 
       <View style={styles.plus}>

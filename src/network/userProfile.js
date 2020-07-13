@@ -26,7 +26,7 @@ const updateImage = (uid, imagePath) => {
         .collection('Users')
         .doc(uid)
         .update({
-          downloadURL,
+          image:downloadURL
         })
         .then(() => {
           console.log('User updated!');

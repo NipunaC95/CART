@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     elevation: 6,
     padding: '5%',
     marginTop: '5%',
+    marginBottom: '5%',
     marginHorizontal: '5%',
     height: 100,
     borderRadius: 5,

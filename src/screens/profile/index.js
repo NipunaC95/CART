@@ -8,7 +8,7 @@ import styles from "./styles";
 import { updateName } from "./../../network/userProfile"; 
 import { withNavigation } from 'react-navigation';
 import { logOut , deleteUser } from "./../../network/users";
-import {GreenButton ,RedButton , GreenButtonNoShadow} from '../../components/buttons/customButton';
+import {GreenButton ,RedButton , GreenButtonNoPadding, GreenButtonNoShadow} from '../../components/buttons/customButton';
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -149,7 +149,7 @@ export class ProfileScreen extends Component {
       </Modal>
 
 
-        <GreenButton
+        <GreenButtonNoPadding
           title="Logout"
           onPress={() => {
             this.handleLogOut()

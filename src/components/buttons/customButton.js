@@ -18,6 +18,21 @@ export  function GreenButton({title, onPress}) {
   );
 }
 
+export  function GreenButtonNoPadding({title, onPress}) {
+  return (
+    <TouchableOpacity style={styles.touchNoPad} onPress={onPress}>
+      <BoxShadow setting={shadowOpt}></BoxShadow>
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={['#2CBE64', '#33C974', '#2CBE64']}
+        style={styles.button}>
+        <Text style={styles.buttonText}> {title}</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+  );
+}
+
 
 export  function GreenButtonNoShadow({title, onPress}) {
   return (
@@ -36,7 +51,7 @@ export  function GreenButtonNoShadow({title, onPress}) {
 
 export  function RedButton({title, onPress}) {
   return (
-    <TouchableOpacity style={styles.touch} onPress={onPress}>
+    <TouchableOpacity style={styles.touchRed} onPress={onPress}>
       <BoxShadow setting={shadowOptRed}></BoxShadow>
       <LinearGradient
         start={{x: 0, y: 0}}
@@ -87,7 +102,21 @@ const styles = StyleSheet.create({
     height: 49,
     width: 188,
   },
-
+  touchNoPad:{ 
+    position:'relative',  
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal:'30%',   
+  },
+  touchRed:{ 
+    position:'relative',  
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal:'30%',  
+    paddingBottom:30
+  },
   touch:{ 
     position:'relative',  
     alignContent: 'center',

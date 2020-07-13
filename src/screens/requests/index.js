@@ -7,8 +7,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import firestore from '@react-native-firebase/firestore'; 
 import RequestCard from './../../components/requestCard';
 import {withNavigation} from 'react-navigation';
 
@@ -80,7 +79,7 @@ const shopsScreen = ({navigation}) => {
         />
       ) : (
         <View style={styles.noReqests}>
-          <Text style={styles.inputTitles}>Yout reqests list is empty</Text>
+          <Text style={styles.inputTitles}>Your reqests list is empty</Text>
         </View>
       )}
     </View>

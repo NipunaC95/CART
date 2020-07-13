@@ -8,9 +8,10 @@ import {
   FlatList, 
 } from 'react-native';
 import {getCustomData, getData} from '../../store';
-import { addGroup } from "./../../network/groups"; 
+import { addGroup } from "./../../network/groups";  
+import  GroupMembersCard  from "../../components/groupMembersCard"; 
 
-
+import { GreenButton} from './../../components/buttons/customButton'
 
 class index extends Component {
   constructor(props) {
@@ -24,6 +25,12 @@ class index extends Component {
   }
 
   createGroup =  async() => { 
+    if(this.state.name.length <7){
+      alert("Group name should contain more than 6 characters")
+    }else if(this.state.memberArray.length <2){
+      alert("At least 2 members are needed to create a group")
+    }
+
     const me = await getData();
     const {name , uid } = await me 
     
@@ -72,20 +79,25 @@ class index extends Component {
           />
 
           <Text> {''}</Text>
-          <Text>Members :</Text>
+          <Text  style={styles.inputTitles} >Members :</Text>
+          <Text> {''}</Text>
           {this.state.loading ? (
             <Text>loading...</Text>
           ) : (
             <FlatList
+            style={styles.flatList}
               data={this.state.memberArray}
               keyExtractor={item => item.date}
+              numColumns = {3}
               renderItem={({item}) => {
-                return <Text> {item.name}</Text>;
+                console.log(item.image)
+                return <GroupMembersCard item={item} />;
               }}
             />
           )}
           <Text> {''}</Text>
-          <Button title={'create Group'} onPress={()=>this.createGroup()} />
+
+          <GreenButton title={'create Group'} onPress={()=>this.createGroup()} />
         </View>
       </View>
     );
@@ -97,6 +109,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Segoe UI',
     flex: 1,
     backgroundColor: '#E4E4E4',
+  },
+
+  flatList:{
+    alignContent:"center", left:'4%'
   },
 
   inputTitles: {

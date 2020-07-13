@@ -9,7 +9,7 @@ const addGroup = (group) => {
 
 const getGroups = async () => {
   var groupList = [];
-  var snapshot = await firestore().collection('Group').get();
+  var snapshot = await firestore().collection('Groups').get();
 
   snapshot.forEach((doc) => {
     groupList.push(doc.data());
@@ -18,4 +18,14 @@ const getGroups = async () => {
   return groupList;
 };
 
-export { addGroup , getGroups };
+const deleteGroup = async (key) => {
+  firestore()
+    .collection('Groups')
+    .doc(key)
+    .delete()
+    .then(() => {
+      console.log('Group deleted!');
+    });
+};
+
+export { addGroup , getGroups , deleteGroup  };

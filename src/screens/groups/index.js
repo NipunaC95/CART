@@ -17,6 +17,8 @@ const groupsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [groups, setgroups] = useState([]); // Initial empty array of groups
 
+
+
   useEffect(async () => {
     const user = await getData();
     const subscriber = firestore()

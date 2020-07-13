@@ -3,8 +3,6 @@ import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import secondryTabNavigator from './secondryTabNavigator';
 import {
-  AddShop,
-  EditShop,
   SignUpScreen,
   LoginScreen,
   ProfileScreen,
@@ -14,6 +12,10 @@ import {
   AddRequestsScreen,
   EditRequestScreen,
   CheckoutScreen,
+  AddShopScreen,
+  EditShopScreen,
+  SplashScreen,
+  EditGroupScreen,
 } from './../screens';
 import {DARKGREEN, LIGHTGREEN} from './../styles/colors';
 const Stack = createStackNavigator();
@@ -61,7 +63,7 @@ const mainStackNavigator = () => {
 
         <Stack.Screen
           name="addShop"
-          component={AddShop}
+          component={AddShopScreen}
           options={{
             headerShown: true,
             title: 'Add a new shop',
@@ -71,7 +73,7 @@ const mainStackNavigator = () => {
 
         <Stack.Screen
           name="editShop"
-          component={EditShop}
+          component={EditShopScreen}
           options={{
             headerShown: true,
             title: 'Edit / Delete a shop',
@@ -115,7 +117,7 @@ const mainStackNavigator = () => {
 
         <Stack.Screen
           name="editRequest"
-          component={ EditRequestScreen}
+          component={EditRequestScreen}
           options={{title: 'Edit / Delete a request', headerShown: true}}
         />
 
@@ -123,6 +125,18 @@ const mainStackNavigator = () => {
           name="checkout"
           component={CheckoutScreen}
           options={{title: 'Checkout', headerShown: true}}
+        />
+
+        <Stack.Screen
+          name="splash"
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="editGroup"
+          component={EditGroupScreen}
+          options={{title: 'Rename group', headerShown: true}}
         />
       </Stack.Navigator>
     </NavigationContainer>

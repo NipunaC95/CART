@@ -12,10 +12,12 @@ import ViewGroupScreen from './viewGroups';
 import AddRequestsScreen from './addRequst';
 import EditRequestScreen from "./editRequest";
 import CheckoutScreen from "./checkout";
+import EditGroupScreen from "./editShop";
+import SplashScreen from "./splashScreen";
 
 export {
-  AddShop,
-  EditShop,
+  AddShopScreen,
+  EditShopScreen,
   LoginScreen,
   SignUpScreen,
   ShopsScreen,
@@ -27,5 +29,7 @@ export {
   ViewGroupScreen,
   AddRequestsScreen,
   EditRequestScreen,
-  CheckoutScreen
+  CheckoutScreen,
+  EditGroupScreen,
+  SplashScreen 
 };

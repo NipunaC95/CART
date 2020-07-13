@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 1},
     marginLeft: '5%',
     top: 40,
-    height: '50%',
+    height: '60%',
     width: '90%',
     position: 'relative',
     //  zIndex: -1,
@@ -128,25 +128,8 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderBottomWidth: 1,
   },
-  errorText: {
-    color: 'red',
-    fontSize: 13,
-    marginLeft: 25,
-  },
-
-  loginText: {
-    fontFamily: 'Segoe UI',
-    fontSize: 16,
-    color: 'green',
-    marginLeft: 65,
-    marginTop: 10,
-  },
-
-  centerButton: {
-    marginTop: 100,
-    // alignContent:'center',
-    alignItems: 'center',
-  },
+  
+  
 });
 
 export default index;

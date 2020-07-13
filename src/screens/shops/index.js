@@ -18,6 +18,7 @@ const shopsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [shops, setshops] = useState([]); // Initial empty array of shops
 
+
   useEffect(() => {
     const subscriber = firestore()
       .collection('Shops')
@@ -48,7 +49,7 @@ const shopsScreen = ({navigation}) => {
   };
 
 
-  const navigateToEditShop = async (item) => {
+  const navigateToEditShop = async (item) => { 
     const user = await getData(); 
     if (item.adminUID == user.uid) {
       setCustomData('shop' , item)

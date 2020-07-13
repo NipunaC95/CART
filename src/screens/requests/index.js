@@ -17,9 +17,12 @@ const shopsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [request, setshops] = useState([]); // Initial empty array of request
 
-  useEffect(async () => {
-    const user = await getData();
-
+  useEffect(  () => {
+    var user  =""
+    const setUser = async()=>{ 
+      user  = await getData();
+    } 
+    setUser()
     const subscriber = firestore()
       .collection('Requests')
       .onSnapshot((querySnapshot) => {

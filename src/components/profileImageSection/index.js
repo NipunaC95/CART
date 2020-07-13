@@ -38,7 +38,7 @@ class index extends Component {
     const userData = await getData();
 
     this.setState({
-      uri: userData.downloadURL,
+      uri: userData.image,
       uid: userData.uid,
       user: userData,
     });

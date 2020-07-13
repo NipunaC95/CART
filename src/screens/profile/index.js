@@ -25,6 +25,7 @@ export class ProfileScreen extends Component {
 
   async componentDidMount() {
     const user = await getData();
+    console.log()
     this.setState({...this.state, user});
   }
 

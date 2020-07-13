@@ -17,11 +17,14 @@ import { deleteGroup } from "./../../network/groups";
 const groupsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [groups, setgroups] = useState([]); // Initial empty array of groups
-
-
-
-  useEffect(async () => {
-    const user = await getData();
+  
+  useEffect(() => {
+    var user = ""
+     async function foo(){
+      user = await getData();  
+    }
+  
+    foo();
     const subscriber = firestore()
       .collection('Groups')
       .onSnapshot((querySnapshot) => {
@@ -31,7 +34,7 @@ const groupsScreen = ({navigation}) => {
           var isAUser = false;
           const data = documentSnapshot.data();
           for (var a in data.users) {
-            console.log((data.users[a].uid + " -- "+ user.uid))
+            console.log((data.users[a].uid + " -- "+  user.uid))
             if (data.users[a].uid  == user.uid) {
               isAUser = true;
               break;
@@ -45,7 +48,6 @@ const groupsScreen = ({navigation}) => {
             });
           }
         });
-
         setgroups(groups);
         setLoading(false);
       });

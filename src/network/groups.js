@@ -19,6 +19,7 @@ const getGroups = async () => {
 };
 
 const deleteGroup = async (key) => {
+  console.log(key)
   firestore()
     .collection('Groups')
     .doc(key)
@@ -28,4 +29,17 @@ const deleteGroup = async (key) => {
     });
 };
 
-export { addGroup , getGroups , deleteGroup  };
+
+const renameGroup = async (key , name) => {
+  firestore()
+  .collection('Groups')
+  .doc(key)
+  .update({
+    name 
+  })
+  .then((snapshot) => snapshot.get())
+  .catch((error) => console.log(error));
+   
+};
+
+export { addGroup , getGroups , deleteGroup  , renameGroup };

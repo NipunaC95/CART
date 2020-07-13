@@ -12,6 +12,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import GroupCard from '../../components/groupCard';
 
 import {setCustomData, getData} from './../../store';
+import { deleteGroup } from "./../../network/groups";
 
 const groupsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -60,6 +61,17 @@ const groupsScreen = ({navigation}) => {
     navigation.navigate('viewGroup');
   };
 
+  const editGroup = async (item) => {
+    const user = await getData(); 
+    if (user.uid != item.admin.uid) {
+      alert('You are not the admin to make changes to this group');
+    }else{ 
+      setCustomData('groupInfo', item);
+      navigation.navigate('editGroup')
+    }
+  };
+
+
   if (loading) {
     return <ActivityIndicator />;
   }
@@ -76,6 +88,9 @@ const groupsScreen = ({navigation}) => {
                 item={item}
                 onPress={() => {
                   navigateToViewGroup(item);
+                }} 
+                onLongPress={() => {
+                  editGroup(item);
                 }}
               />
             );

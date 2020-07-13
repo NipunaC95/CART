@@ -1,24 +1,13 @@
 import React from 'react';
 import {Text, StyleSheet, Image, Alert} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {getData} from '../store';
-import {deleteGroup} from '../network/groups';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler'; 
 
-const deleteAGroup = async (item) => {
-  const user = await getData();
 
-  if (user.uid == item.admin.uid) {
-    alert('You are not the admin to make changes to this group');
-  }else{
-    navigator.navigate('login')
-  }
-};
-
-const GroupCard = ({item, onPress}) => {
+const GroupCard = ({item, onPress ,  onLongPress}) => {
   return (
-    <TouchableWithoutFeedback
+    <TouchableWithoutFeedback 
       onPress={onPress}
-      onLongPress={() => deleteAGroup(item)}
+      onLongPress={onLongPress }
       style={styles.card}>
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.subTitle}>{item.users.length} members</Text>

@@ -4,21 +4,20 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
   KeyboardAvoidingView,
   Alert,
 } from 'react-native';
-import {setCustomData, getCustomData} from '../../store';
-import {updateShop, deleteShop} from '../../network/shops';
-import {GreenButton, RedButton} from '../../components/buttons/customButton';
+import { getCustomData} from '../../store';
+import { deleteGroup , renameGroup } from '../../network/groups';
+import { 
+  RedButton,
+  GreenButtonNoPadding,
+} from '../../components/buttons/customButton';
 class index extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shopName: '',
-      location: '',
-      name: '',
-      type:''
+    this.state = { 
+      name: '', 
     };
   }
   setData(key, value) {
@@ -29,27 +28,24 @@ class index extends Component {
     });
   }
   async componentDidMount() {
-    const data = await getCustomData('shop');
+    const data = await getCustomData('groupInfo');
+    console.log(JSON.stringify(data, null, 2));
     this.setState({...data});
   }
 
-  updateShop(shop) {
+  updateGroup(group) {
     if (this.state.name.length < 3) {
-      alert('Shop name should contain more than 2 characters');
-    } else if (this.state.location.length < 6) {
-      alert('Location of the shop should contain more than 5 characters');
-    } else if (this.state.type.length < 6) {
-      alert('Shop name should contain more than 5 characters');
+      alert('Group name should contain more than 2 characters'); 
     } else {
-      updateShop(shop);
-      this.props.navigation.navigate('shops');
+      renameGroup( group.id , this.state.name);
+      this.props.navigation.navigate('groups');
     }
   }
 
-  deleteShop(shop) {
+  deleteGroup(group) {
     Alert.alert(
       'Delete',
-      `Do you really want to delete this shop (${shop}) ?`,
+      `Do you really want to delete this group (${group}) ?`,
       [
         {
           text: 'No',
@@ -59,8 +55,8 @@ class index extends Component {
         {
           text: 'Yes',
           onPress: () => {
-            deleteShop(shop);
-            this.props.navigation.navigate('shops');
+            deleteGroup(this.state.id);
+            this.props.navigation.navigate('groups');
           },
         },
       ],
@@ -77,38 +73,20 @@ class index extends Component {
         <View style={styles.card}>
           <Text style={styles.inputTitles}>Name </Text>
           <TextInput
-            placeholder={'Name of the shop'}
+            placeholder={'Name of the group'}
             style={styles.textInput}
             value={this.state.name}
             onChangeText={(e) => {
               this.setData('name', e);
             }}></TextInput>
 
-          <Text style={styles.inputTitles}>Location </Text>
-          <TextInput
-            placeholder={'Location of the shop'}
-            style={styles.textInput}
-            value={this.state.location}
-            onChangeText={(e) => {
-              this.setData('location', e);
-            }}></TextInput>
-
-          <Text style={styles.inputTitles}>Type </Text>
-          <TextInput
-            placeholder={'Type of the shop'}
-            style={styles.textInput}
-            value={this.state.type}
-            onChangeText={(e) => {
-              this.setData('type', e);
-            }}></TextInput>
-
-          <GreenButton
-            title={'Update'}
-            onPress={() => this.updateShop(this.state)}
+          <GreenButtonNoPadding
+            title={'Rename'}
+            onPress={() => this.updateGroup(this.state)}
           />
           <RedButton
-            title={'Delete'}
-            onPress={() => this.deleteShop(this.state.key)}
+            title={'Delete group'}
+            onPress={() => this.deleteGroup(this.state.key)}
           />
         </View>
       </KeyboardAvoidingView>
@@ -130,7 +108,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 1},
     marginLeft: '5%',
     top: 40,
-    height: '85%',
+    height: '50%',
     width: '90%',
     position: 'relative',
     //  zIndex: -1,

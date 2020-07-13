@@ -1,18 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Button,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Button} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import Checkout from '../../components/checkoutCard';
 import {setCustomData, getData, getCustomData} from '../../store';
 import {collectRequests} from '../../network/requests';
-
+import {GreenButton} from '../../components/buttons/customButton';
 const index = ({navigation}) => {
   const [requests, setRequests] = useState([]);
   const [selected, setSelected] = useState([]);
@@ -31,7 +23,7 @@ const index = ({navigation}) => {
             documentSnapshot.data().shopId == shopData.id &&
             documentSnapshot.data().status != 'collected'
           ) {
-            console.log(documentSnapshot.data().status );
+            console.log(documentSnapshot.data().status);
 
             requests.push({
               ...documentSnapshot.data(),
@@ -75,30 +67,35 @@ const index = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputTitles}>Selcet items you collected </Text>
-
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={requests}
-        renderItem={({item}) => {
-          return (
-            <Checkout
-              item={item}
-              name={item.name}
-              photo={item.image}
-              uid={item.uid}
-              toggleItem={toggleItem}
-            />
-          );
-        }}
-      />
-
-      <Button
-        title={'Finish'}
-        onPress={() => {
-          setFinished();
-        }}
-      />
+      {(requests.length==0)?(
+        <View style={styles.noReqests}>
+        <Text style={styles.inputTitles}>No requests from this shop</Text>  
+        </View>
+      ):(
+        <View>
+        <Text style={styles.inputTitles}>Selcet items you collected </Text> 
+        <FlatList
+          style={styles.flatlist}
+          ListFooterComponent={<View />}
+          data={requests}
+          renderItem={({item}) => {
+            return <Checkout item={item} toggleItem={toggleItem} /> 
+          }}
+          ListFooterComponentStyle={{height: 100}}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+      )}
+      
+      <View style={styles.buttonContainer}>
+      {(requests.length!=0)?(
+        <GreenButton
+          title={'Finish'}
+          onPress={() => {
+            setFinished();
+          }}
+        />):(<View></View>)}
+      </View>
     </View>
   );
 };
@@ -109,7 +106,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E4E4E4',
   },
-
+  flatlist: {
+    paddingBottom: '10%',
+  },
   card: {
     borderRadius: 6,
     backgroundColor: 'white',
@@ -156,13 +155,6 @@ const styles = StyleSheet.create({
     // alignContent:'center',
     alignItems: 'center',
   },
-  plusWrapper: {
-    width: 35,
-    height: 35,
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
   container: {
     height: '100%',
@@ -171,25 +163,22 @@ const styles = StyleSheet.create({
     elevation: 1,
   },
 
-  plus: {
-    elevation: 3,
+  buttonContainer: {
+    height: 100,
     position: 'absolute',
-    right: '5%',
-    bottom: '5%',
-    backgroundColor: '#0F4021',
-    height: 50,
-    width: 50,
-    borderRadius: 25,
+    bottom: 0,
     alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 3,
   },
+  noReqests:{
+    height:'80%',
+    width:'100%', 
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
 
-  plusText: {
-    color: 'white',
-    fontSize: 25,
-  },
+  }
 });
 
 export default index;

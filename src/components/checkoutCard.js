@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Text, StyleSheet, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {getCustomData, setCustomData} from '../store'; 
+import {getCustomData, setCustomData} from '../store';  
+import moment from 'moment';
 const truePhoto = require('./../assets/checkBoxes/checked.png');
 const falsePhoto = require('./../assets/checkBoxes/unchecked.png');
 
-const ShopCard = ({name, photo, uid , item, toggleItem }) => {
+const ShopCard = ({ item, toggleItem }) => {
   const [checked, setchecked] = useState(false);
 
   const addUserToList = async () => {
@@ -18,9 +19,13 @@ const ShopCard = ({name, photo, uid , item, toggleItem }) => {
       style={styles.card}
       onPress={() => {
         addUserToList();
-      }}>
-      <Image source={{uri: photo}} style={styles.image} />
-      <Text style={styles.title}>{name} </Text>
+      }}> 
+      
+      <Text style={styles.title}>{item.name}  </Text> 
+      <Text style={styles.subTitle}>Type :- {item.type} </Text>
+      <Text style={styles.subTitle}>Price :- {item.price}   </Text> 
+      <Text style={styles.subTitle}>Requested by :- {item.user}   </Text> 
+      <Text style={styles.subTitle}>Asked :- { moment(item.date).fromNow()}   </Text> 
       <Image
         source={checked ? truePhoto : falsePhoto}
         style={styles.selection}
@@ -37,38 +42,28 @@ const styles = StyleSheet.create({
     elevation: 6,
     padding: '5%',
     marginTop: '5%',
+    marginBottom: '5%',
     marginHorizontal: '5%',
-    height: 100,
+    height: 160,
     borderRadius: 5,
     backgroundColor: 'white',
     elevation: 2,
   },
 
-  title: {
-    paddingVertical: '8%',
-    paddingLeft: '2%',
-    fontSize: 17,
-    color: 'black',
-    position: 'relative',
-    left: '30%',
-    height: '100%',
-    justifyContent: 'center',
-  },
-
-  image: {
-    position: 'absolute',
-    left: 15,
-    top: 15,
-    borderRadius: 40,
-    width: 70,
-    height: 70,
-    backgroundColor: 'red',
-  },
-
-  selection: {
+  title: { 
+    paddingTop: '3.5%', 
+    fontSize: 20,
+    color: 'black',   
+  }, 
+  subTitle: {
+    top:'10%',
+    fontSize: 16, 
+    color: 'black',  
+  }, 
+  selection: { 
     position: 'absolute',
     right: 35,
-    top: 32.5,
+    top:'18%',
     borderRadius: 40,
     width: 35,
     height: 35,

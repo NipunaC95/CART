@@ -89,8 +89,11 @@ const styles = StyleSheet.create({
   },
 
   touch:{ 
-    position:'relative',
-    top:5,
-    alignSelf:'center'
+    position:'relative',  
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal:'30%',  
+    paddingBottom:30
   }
 });

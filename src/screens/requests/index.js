@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  View,Alert,
+  View,
+  Text,
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -54,15 +55,16 @@ const shopsScreen = ({navigation}) => {
     return <ActivityIndicator />;
   }
 
-  return ( 
-      <View style={styles.container}> 
-        <FlatList 
+  return (
+    <View style={styles.container}>
+      {request.length != 0 ? (
+        <FlatList
           showsVerticalScrollIndicator={false}
           data={request}
           renderItem={({item}) => {
             return (
               <RequestCard
-                item={item} 
+                item={item}
                 onPress={() => {
                   if (item.status == 'collected') {
                     alert(
@@ -75,8 +77,13 @@ const shopsScreen = ({navigation}) => {
               />
             );
           }}
-        />  
-      </View> 
+        />
+      ) : (
+        <View style={styles.noReqests}>
+          <Text style={styles.inputTitles}>Yout reqests list is empty</Text>
+        </View>
+      )}
+    </View>
   );
 };
 
@@ -86,11 +93,25 @@ const styles = StyleSheet.create({
     left: 10,
     top: 10,
   },
-  container: { 
+  container: {
     height: '100%',
     paddingHorizontal: '5%',
     zIndex: 0,
-    elevation: 1, 
+    elevation: 1,
+  },
+  inputTitles: {
+    marginLeft: 25,
+    fontFamily: 'Segoe UI',
+    fontSize: 18,
+    marginTop: 30,
+  },
+
+  noReqests: {
+    height: '80%',
+    width: '100%',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

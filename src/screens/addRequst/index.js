@@ -6,7 +6,7 @@ import {addRequest} from '../../network/requests';
 import {getData, getCustomData} from './../../store';
 import {withNavigation} from 'react-navigation';
 import {Picker} from '@react-native-community/picker';
-import {GreenButton} from '../../components/buttons/customButton';
+import {GreenButton, GreenButtonNoPadding} from '../../components/buttons/customButton';
 
 class index extends Component {
   constructor(props) {
@@ -140,6 +140,7 @@ class index extends Component {
               this.setStateValue('price', e);
             }}></TextInput>
 
+<Text style={styles.inputTitles}>Shop </Text>
           <Picker
             style={styles.shopPicker}
             selectedValue={this.state.selectedShop}
@@ -153,7 +154,7 @@ class index extends Component {
           </Picker>
 
           <View style={styles.submitContainer}>
-            <GreenButton
+            <GreenButtonNoPadding
               title={'Create a request'}
               onPress={() => {
                 this.submitShop();
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 1},
     marginLeft: '5%',
     top: 40,
-    height: '80%',
+    height: '90%',
     width: '90%',
     position: 'relative',
   },

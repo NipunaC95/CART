@@ -42,7 +42,7 @@ class index extends Component {
     }
   }
 
-  deleteGroup(group) {
+  deleteAGroup(group) {
     Alert.alert(
       'Delete',
       `Do you really want to delete this group (${group}) ?`,
@@ -55,6 +55,7 @@ class index extends Component {
         {
           text: 'Yes',
           onPress: () => {
+            console.log(JSON.stringify(this.state , null , 2))
             deleteGroup(this.state.id);
             this.props.navigation.navigate('groups');
           },
@@ -86,7 +87,7 @@ class index extends Component {
           />
           <RedButton
             title={'Delete group'}
-            onPress={() => this.deleteGroup(this.state.key)}
+            onPress={() => this.deleteAGroup(this.state.name)}
           />
         </View>
       </KeyboardAvoidingView>

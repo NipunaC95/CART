@@ -5,45 +5,44 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  FlatList, 
+  FlatList,
 } from 'react-native';
 import {getCustomData, getData} from '../../store';
-import { addGroup } from "./../../network/groups";  
-import  GroupMembersCard  from "../../components/groupMembersCard"; 
+import {addGroup} from './../../network/groups';
+import GroupMembersCard from '../../components/groupMembersCard';
 
-import { GreenButton} from './../../components/buttons/customButton'
+import {GreenButton} from './../../components/buttons/customButton';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      name: '', 
+      name: '',
       memberArray: '',
-      admin:{}
+      admin: {},
     };
   }
 
-  createGroup =  async() => { 
-    if(this.state.name.length <7){
-      alert("Group name should contain more than 6 characters")
-    }else if(this.state.memberArray.length <2){
-      alert("At least 2 members are needed to create a group")
-    }
+  createGroup = async () => {
+    if (this.state.name.length < 7) {
+      alert('Group name should contain more than 6 characters');
+    } else if (this.state.memberArray.length < 2) {
+      alert('At least 2 members are needed to create a group');
+    } else {
+      const me = await getData();
+      const {name, uid} = await me;
 
-    const me = await getData();
-    const {name , uid } = await me 
-    
-    const group ={
-      admin : {name , uid},
-      name:this.state.name,
-      users:this.state.memberArray,
-      date: new Date()
+      const group = {
+        admin: {name, uid},
+        name: this.state.name,
+        users: this.state.memberArray,
+        date: new Date(),
+      };
+
+      addGroup(group);
+      this.props.navigation.navigate('secondryNavigator', {screen: 'groups'});
     }
-    
-    addGroup(group);
-    this.props.navigation.navigate('secondryNavigator', { screen: 'groups'})
-    
   };
 
   setGroupName = (name) => {
@@ -54,12 +53,12 @@ class index extends Component {
     const me = await getData();
     const members = await getCustomData('userList');
     var memberArray = [];
-    memberArray.push(me)
+    memberArray.push(me);
     for (a in members) {
       memberArray.push(members[a]);
     }
     this.setState({
-      ...this.state, 
+      ...this.state,
       members,
       memberArray,
       loading: false,
@@ -79,25 +78,28 @@ class index extends Component {
           />
 
           <Text> {''}</Text>
-          <Text  style={styles.inputTitles} >Members :</Text>
+          <Text style={styles.inputTitles}>Members :</Text>
           <Text> {''}</Text>
           {this.state.loading ? (
             <Text>loading...</Text>
           ) : (
             <FlatList
-            style={styles.flatList}
+              style={styles.flatList}
               data={this.state.memberArray}
-              keyExtractor={item => item.date}
-              numColumns = {3}
+              keyExtractor={(item) => item.date}
+              numColumns={3}
               renderItem={({item}) => {
-                console.log(item.image)
+                console.log(item.image);
                 return <GroupMembersCard item={item} />;
               }}
             />
           )}
           <Text> {''}</Text>
 
-          <GreenButton title={'create Group'} onPress={()=>this.createGroup()} />
+          <GreenButton
+            title={'create Group'}
+            onPress={() => this.createGroup()}
+          />
         </View>
       </View>
     );
@@ -111,8 +113,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#E4E4E4',
   },
 
-  flatList:{
-    alignContent:"center", left:'4%'
+  flatList: {
+    alignContent: 'center',
+    left: '4%',
   },
 
   inputTitles: {
@@ -169,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default  index ;
+export default index;

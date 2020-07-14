@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: 230,
-    width: 230,
+    height: 200,
+    width: 200,
     borderRadius: 115,
     resizeMode: 'cover',
   },
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     borderRadius: 25,
     left: 210,
-    top: 180,
+    top: 160,
     alignItems: 'center',
     justifyContent: 'center',
   },

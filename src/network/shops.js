@@ -7,7 +7,7 @@ const addShop = (shop) => {
       name: shop.name,
       location: shop.location,
       date: new Date(),
-      admin: shop.user,
+      admin: shop.admin,
       adminUID: shop.uid,
     })
     .then((snapshot) => snapshot.get())

@@ -42,7 +42,7 @@ class index extends Component {
     }else if(this.state.location.length <6){
       alert('Location of the shop should contain more than 5 characters');
     }else if(this.state.type.length <6){
-      alert('Shop name should contain more than 5 characters');
+      alert('Shop type should contain more than 5 characters');
     }
     else{
       

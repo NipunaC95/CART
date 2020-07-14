@@ -26,7 +26,7 @@ class index extends Component {
     } else if (this.state.type == '') {
       alert('Type should not be empty');
     } else if (this.state.price == 0) {
-      alert('stimated price should not be zero');
+      alert('estimated price should not be zero');
     } else {
       updateRequest(request);
       this.props.navigation.navigate('requests');

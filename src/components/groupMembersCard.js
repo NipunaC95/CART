@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const groupMembersCard = ({item}) => {
-  console.log(JSON.stringify(item,null,3))
+  console.log(JSON.stringify(item.image,null,3))
   return (
     <View style={styles.card}>
       <Image source={{uri: item.image}} style={styles.image} /> 

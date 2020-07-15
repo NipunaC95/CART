@@ -90,7 +90,8 @@ const mainStackNavigator = () => {
         <Stack.Screen
           name="secondryNavigator"
           component={secondryTabNavigator}
-          options={{title: 'Cart', headerShown: true}}
+          options={{title: 'Cart',
+          headerLeft: null}}
         />
         <Stack.Screen
           name="addGroupMembers"

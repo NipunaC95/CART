@@ -59,14 +59,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 15,
     top: 15,
-    borderRadius: 40,
+    borderRadius: 35,
     width: 70,
     height: 70,
-    backgroundColor: 'red',
+    backgroundColor:'black',
   },
 
   selection: {
-    position: 'absolute',
+    position: 'absolute', 
     right: 35,
     top: 32.5,
     borderRadius: 40,

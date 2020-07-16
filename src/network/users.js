@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';  
+import { clearAppData } from "./../store/index";
 
 const signUp = (email, password, userName, navigation) => {
   auth()
@@ -40,6 +41,7 @@ const logIn = async (email, password) => {
 };
 
 const logOut = () => {
+  clearAppData();
   auth()
     .signOut()
     .then(() => console.log('User signed out!'));

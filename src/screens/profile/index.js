@@ -72,8 +72,8 @@ export class ProfileScreen extends Component {
 
 
   handleDelete =() =>{
-    //deleteUser();
-    clearCustomData('user');
+    deleteUser();
+    // clearCustomData('user');
     clearAppData();
     this.props.navigation.navigate('login') 
   }

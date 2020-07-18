@@ -57,12 +57,15 @@ const getUserDetails = async (userId)=>{
 
 
 const deleteUser = async (userId)=>{  
+
   var user = await  auth().currentUser;
+  const uid = user.uid
+  firestore().collection('Users').doc(uid).delete()  
   auth().currentUser.delete()
-  console.log(JSON.stringify(user,null,2))
+  console.log(uid)
 
   user.delete().then( async function() {
-      firestore().collection('Users').doc(user.uid).delete()  
+    console.log(uid) 
   }, function(error) {
     // An error happened.
   }); 

@@ -23,10 +23,12 @@ export class ProfileScreen extends Component {
     };
   }
 
-  async componentDidMount() {
+  async setData() {
     const user = await getData();
-    console.log()
+    if(user!=null){
+      
     this.setState({...this.state, user});
+    }
   }
 
   showNameChangeModal() {
@@ -63,20 +65,22 @@ export class ProfileScreen extends Component {
 
 
   handleLogOut =() =>{
-    logOut();
     clearAppData();
+    logOut();
     this.props.navigation.navigate('login') 
   }
 
 
   handleDelete =() =>{
-    deleteUser();
+    //deleteUser();
+    clearCustomData('user');
     clearAppData();
     this.props.navigation.navigate('login') 
   }
 
 
   render() {
+    this.setData();
     return (
       <View style={styles.container}>
       

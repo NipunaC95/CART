@@ -5,6 +5,7 @@ const addShop = (shop) => {
     .collection('Shops')
     .add({
       name: shop.name,
+      type:shop.type,
       location: shop.location,
       date: new Date(),
       admin: shop.admin,

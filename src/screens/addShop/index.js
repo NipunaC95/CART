@@ -51,10 +51,10 @@ class index extends Component {
       location: this.state.location,
       admin: this.state.user.name,
       uid: this.state.user.uid,
-      type:this.state.user.type
+      type:this.state.type
     };
 
-    console.log(JSON.stringify(shop), null, 2);
+    console.log(JSON.stringify(shop, null, 2));
     addShop(shop);
     this.props.navigation.navigate('shops');
     }

@@ -16,7 +16,7 @@ const signUp = (email, password, userName, navigation) => {
           name: userName,
           email,  
           uid: data.user.uid,
-          image: 'https://firebasestorage.googleapis.com/v0/b/cart-aa736.appspot.com/o/Profileimages%2Fdefault.png?alt=media&token=6161e962-c895-4522-80c6-4de7ef1e6c4e', 
+          image: 'https://firebasestorage.googleapis.com/v0/b/cart-aa736.appspot.com/o/Profileimages%2FnewDefault.png?alt=media&token=5ccdfce6-24af-46f1-882a-0a84cd5c22df',  
         })
         .then((snapshot) => {
           navigation.navigate('login');

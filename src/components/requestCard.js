@@ -1,10 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet, Alert , View} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-
-
-
-import moment from 'moment';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler'; 
 import { deleteRequest } from '../network/requests';
 
 const RequestCard = ({item, onPress, onLongPress}) => {
@@ -44,8 +40,7 @@ const RequestCard = ({item, onPress, onLongPress}) => {
         {item.status
           ? `This item is collected by ${item.collectorName}`
           : 'This item is not collected untill now'}
-      </Text>
-      <Text style={styles.details}>Asked {moment(item.date).fromNow()} </Text>
+      </Text> 
     </TouchableWithoutFeedback>
   );
 };
@@ -56,7 +51,7 @@ const styles = StyleSheet.create({
     padding: '5%',
     marginTop: '5%',
     marginBottom: '5%',
-    height: 180,
+    height: 160,
     borderRadius: 10,
     backgroundColor: '#28AC5B',
     elevation: 5,

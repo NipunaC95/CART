@@ -11,7 +11,7 @@ const ShopCard = ({item, onPress, onLongPress}) => {
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.subTitle}>located at {item.location}</Text>
       <Text style={styles.details}>Added by {item.admin}</Text>
-      <Text style={styles.details}> {item.type}</Text>
+      <Text style={styles.details}>{item.type}</Text>
     
     </TouchableWithoutFeedback>
   );

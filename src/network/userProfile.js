@@ -28,14 +28,8 @@ const updateImage = (uid, imagePath) => {
         .update({
           image:downloadURL
         })
-        .then(async() => {
-          clearCustomData('user');
-          console.log('User updated!'); 
-          const oldData = await getData();
-          console.log(JSON.stringify(newData, null ,2))
-          const newData = {...oldData, downloadURL};
-          console.log(JSON.stringify(newData, null ,2))
-          setData(newData);
+        .then(async() => { 
+          console.log('User updated!');  
         });
      
     },

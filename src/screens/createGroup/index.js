@@ -49,11 +49,9 @@ class index extends Component {
     this.setState({...this.state, name});
   };
 
-  componentDidMount = async () => {
-    const me = await getData();
+  componentDidMount = async () => { 
     const members = await getCustomData('userList');
-    var memberArray = [];
-    memberArray.push(me);
+    var memberArray = []; 
     for (a in members) {
       memberArray.push(members[a]);
     }
@@ -78,7 +76,7 @@ class index extends Component {
           />
 
           <Text> {''}</Text>
-          <Text style={styles.inputTitles}>Members :</Text>
+          <Text style={styles.inputTitles}>Members other than me:</Text>
           <Text> {''}</Text>
           {this.state.loading ? (
             <Text>loading...</Text>

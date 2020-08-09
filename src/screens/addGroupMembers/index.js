@@ -15,10 +15,7 @@ import GroupMembersCard from '../../components/groupMembersCard'
 
 const index = ({navigation}) => {
   const [users, setUsers] = useState([]);
-  const [selected, setSelected] = useState([]); 
-  const [current, setCurrent] = useState({})
-  
-  
+  const [selected, setSelected] = useState([]);   
 
   useEffect(() => {
     const subscriber = firestore()

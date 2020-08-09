@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
-import {getData, setData} from './../store';
+import {getData, setData  ,clearCustomData} from './../store';
 
 const updateImage = (uid, imagePath) => {
   console.log(uid, imagePath);
@@ -28,13 +28,16 @@ const updateImage = (uid, imagePath) => {
         .update({
           image:downloadURL
         })
-        .then(() => {
-          console.log('User updated!');
+        .then(async() => {
+          clearCustomData('user');
+          console.log('User updated!'); 
+          const oldData = await getData();
+          console.log(JSON.stringify(newData, null ,2))
+          const newData = {...oldData, downloadURL};
+          console.log(JSON.stringify(newData, null ,2))
+          setData(newData);
         });
-      console.log(JSON.stringify(downloadURL, null, 2));
-      const oldData = await getData();
-      const newData = {...oldData, downloadURL};
-      setData(newData);
+     
     },
   );
 };

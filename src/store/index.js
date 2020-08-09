@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
+import firestore from '@react-native-firebase/firestore';
 
 const setData = async (data) => {
   try {

@@ -29,6 +29,7 @@ class index extends Component {
         }); 
         //upload image and update document
         updateImage(this.state.uid, response.uri); 
+        setData({...getData(),image:response.uri})
       },
     );
   };

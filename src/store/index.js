@@ -4,7 +4,7 @@ const setData = async (data) => {
   try {
     if (data !== null) {
       const stringData = JSON.stringify(data);
-      //console.log('saving string : ', stringData)
+      console.log('saving string : ', stringData)
       await AsyncStorage.setItem('user', stringData);
     }
   } catch (error) {
@@ -17,7 +17,7 @@ const getData = async () => {
     const stringData = await AsyncStorage.getItem('user');
     // console.log('retrieving string :' , stringData)
     const objectData = JSON.parse(stringData);
-    // console.log('retrieving object :' , objectData)
+    //console.log('retrieving object :' , objectData)
 
     if (objectData !== null) {
       return objectData;

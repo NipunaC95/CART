@@ -11,8 +11,7 @@ import firestore from '@react-native-firebase/firestore';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import GroupCard from '../../components/groupCard';
 
-import {setCustomData, getData} from './../../store';
-import { deleteGroup } from "./../../network/groups";
+import {setCustomData, getData} from './../../store'; 
 
 const groupsScreen = ({navigation}) => {
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
@@ -22,8 +21,7 @@ const groupsScreen = ({navigation}) => {
     var user = ""
      async function foo(){
       user = await getData();  
-    }
-  
+    } 
     foo();
     const subscriber = firestore()
       .collection('Groups')

@@ -8,7 +8,7 @@ import styles from "./styles";
 import { updateName } from "./../../network/userProfile"; 
 import { withNavigation } from 'react-navigation';
 import { logOut , deleteUser } from "./../../network/users";
-import {GreenButton ,RedButton , GreenButtonNoPadding, GreenButtonNoShadow} from '../../components/buttons/customButton';
+import { RedButton , GreenButtonNoPadding, GreenButtonNoShadow} from '../../components/buttons/customButton';
 
 export class ProfileScreen extends Component {
   constructor(props) {
@@ -25,8 +25,7 @@ export class ProfileScreen extends Component {
 
   async setData() {
     const user = await getData();
-    if(user!=null){
-      
+    if(user!=null){ 
     this.setState({...this.state, user});
     }
   }
